@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Андрей Ясновский](https://up.htmlacademy.ru/javascript/21/user/1355187).
-* Наставник: [Дмитрий Рябинин](https://htmlacademy.ru/profile/haschish).
+* Наставник: [Дмитрий Рябинин](https://up.htmlacademy.ru/javascript/21/user/63289).
 
 ---
 
