@@ -1,11 +1,6 @@
 'use strict';
-// Получаем элементы с классом map__pin. Используем селектор.
-let pins = document.querySelectorAll('.map__pin');
-// Получаем элемент с идентификатором "housing-price". Используем селектор.
-let housePriceField = document.querySelector('#housing-price');
-
 const getRandomInt = function (max) {
-  return  Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max);
 };
 
 let titleArray = ['Title1', 'Title2', 'Title3'];
@@ -21,7 +16,7 @@ let generateObject = function (num) {
     },
     offer: {
       title: titleArray[Math.floor(Math.random() * titleArray.length)],
-      address: "{{location.x}}, {{location.y}}",
+      address: '{{location.x}}, {{location.y}}',
       price: Math.floor(Math.random() * (5001 - 0)) + 0,
       rooms: Math.floor(Math.random() * (3 - 1)) + 1,
       type: typeArray[Math.floor(Math.random() * typeArray.length)],
@@ -32,25 +27,42 @@ let generateObject = function (num) {
       features: featuresArray.slice(getRandomInt(featuresArray.length - 1))
     },
     location: {
-      x: Math.floor(Math.random() * (1200 - 0)),
-      y: Math.floor(Math.random() * (630 - 130))
+      x: Math.floor(Math.random() * (1150 - 50)) + 50,
+      y: Math.floor(Math.random() * (580 - 180)) + 180,
     }
   };
+
   return ad;
 };
 
-let objectArray = [];
-for (let i = 0; i < 8; i++) {
-  objectArray.push(generateObject(i));
+const generateData = function (num) {
+  let objectArray = [];
+  for (let i = 0; i < num; i++) {
+    objectArray.push(generateObject(i));
+  }
+
+  return objectArray;
+};
+
+let templatePin = document.querySelector('#pin').content.querySelector('.map__pin ');
+const createTemplatePin = function (obj) {
+  const pin = templatePin.cloneNode(true);
+  pin.style.left = obj.location.x + 'px';
+  pin.style.top = obj.location.y + 'px';
+  pin.querySelector('img').src = obj.author.avatar;
+
+  return pin;
 };
 
 let similarListmMapPins = document.querySelector('.map__pins');
-let similarWizardPin = document.querySelector('#pin').content.querySelector('.map__pin ');
-
-for (let i = 0; i < 1; i++) {
-  let mark = similarWizardPin.cloneNode(true);
-
-  similarListmMapPins.appendChild(mark);
+const fragment = document.createDocumentFragment();
+const renderPins = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    const pin = createTemplatePin(arr[i]);
+    fragment.appendChild(pin);
+  }
+  similarListmMapPins.appendChild(fragment);
 };
 
-console.log(objectArray);
+const data = generateData(8);
+renderPins(data);
