@@ -19,6 +19,7 @@ let generateObject = function (num) {
       address: '{{location.x}}, {{location.y}}',
       price: Math.floor(Math.random() * (5001 - 0)) + 0,
       rooms: Math.floor(Math.random() * (3 - 1)) + 1,
+      guests: Math.floor(Math.random() * (5 - 1)) + 1,
       type: typeArray[Math.floor(Math.random() * typeArray.length)],
       photos: photosArray.slice(getRandomInt(photosArray.length)),
       description: '',
@@ -35,6 +36,7 @@ let generateObject = function (num) {
   return ad;
 };
 
+//Генерируем данные для созданного массива из объекта сверху
 const generateData = function (num) {
   let objectArray = [];
   for (let i = 0; i < num; i++) {
@@ -44,6 +46,7 @@ const generateData = function (num) {
   return objectArray;
 };
 
+//Получаем шаблон и заменяем данные из массива
 let templatePin = document.querySelector('#pin').content.querySelector('.map__pin ');
 const createTemplatePin = function (obj) {
   const pin = templatePin.cloneNode(true);
@@ -54,6 +57,7 @@ const createTemplatePin = function (obj) {
   return pin;
 };
 
+//Отрисовываем метки с полученными данными с помощью Документ Фрагмента
 let similarListmMapPins = document.querySelector('.map__pins');
 const fragment = document.createDocumentFragment();
 const renderPins = function (arr) {
@@ -63,6 +67,38 @@ const renderPins = function (arr) {
   }
   similarListmMapPins.appendChild(fragment);
 };
+
+//Получаем шаблон и заменяем данные из массива
+let templateCards = document.querySelector('#card').content.querySelector('.map__card');
+const createTemplateCards = function (obj) {
+  const card = templateCards.cloneNode(true);
+  card.querySelector('popup__title').innerHTML = obj.offer.title;
+  card.querySelector('popup__text--address').innerHTML = obj.offer.address;
+  card.querySelector('popup__text--price').innerHTML = obj.offer.price + '₽';
+
+  card.querySelector('popup__text--capacity').innerHTML = obj.offer.rooms + 'комнаты для' + obj.offer.guests + 'гостей';
+  card.querySelector('popup__text--time').innerHTML = 'Заезд после' + obj.offer.checkin + ', выезд до' + obj.offer.checkout;
+  card.querySelector('popup__features').innerHTML = obj.offer.features;
+  card.querySelector('popup__description').innerHTML = obj.offer.description;
+  card.querySelector('popup__photos').content.querySelector('.popup__photo').src = obj.offer.photos;
+  card.querySelector('popup__avatar').src = obj.author.avatar;
+
+  return pin;
+};
+
+// //Для отрисовки карточки
+// let ideansertBeforeCards = document.querySelector('.map__filters-container');
+// let similarListmMapCards = document.querySelector('.map');
+// const fragmentCards = document.createDocumentFragment();
+// const renderCards = function (arr) {
+//   for (let i = 0; i < arr.length; i++) {
+//     const card = createTemplatePin(arr[i]);
+//     fragmentCards.appendChild(pin);
+//   }
+//
+//   similarListmMapCards.appendChild(fragmentCards);
+// };
+
 
 const data = generateData(8);
 renderPins(data);
