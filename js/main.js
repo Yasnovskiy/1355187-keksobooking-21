@@ -72,68 +72,66 @@ const renderPins = function (arr) {
 let templateCards = document.querySelector('#card').content.querySelector('.map__card');
 const createTemplateCards = function (obj) {
   const card = templateCards.cloneNode(true);
+
   card.querySelector('popup__title').textContent = obj.offer.title;
   card.querySelector('popup__text--address').textContent = obj.offer.address;
   card.querySelector('popup__text--price').textContent = obj.offer.price + '₽';
-
+  card.querySelector('popup__type').textContent = obj.offer.type;
   card.querySelector('popup__text--capacity').textContent = obj.offer.rooms + 'комнаты для' + obj.offer.guests + 'гостей';
   card.querySelector('popup__text--time').textContent = 'Заезд после' + obj.offer.checkin + ', выезд до' + obj.offer.checkout;
-  card.querySelector('popup__features').textContent = obj.offer.features;
   card.querySelector('popup__description').textContent = obj.offer.description;
-  card.querySelector('popup__photos').content.querySelector('.popup__photo').src = obj.offer.photos[i];
   card.querySelector('popup__avatar').src = obj.author.avatar;
 
-  return card;
+    const featuresList = card.querySelector('popup__features');
+    featuresList.innerHTML = '';
+    for (let i = 0; i < obj.offer.feature.length; i++) {
+      const features = obj.offer.feature[i];
+      const featureElement = '<li class="popup__feature popup__feature' + features +'"></li>';
+      // featuresList.appendChild(featureElement);
+      //
+      // &&
+      featuresList.insertAdjacentHTML('afterbegin', featureElement);
+    };
+
+    const photosList = card.querySelector('popup__photos');
+    for (let j = 0; j < obj.offer.photos.length; j++) {
+      const photo = templateCards.cloneNode(true);
+      photosList.innerHTML = '';
+      photo.src = obj.offer.photos;
+      photosList.appendChild(photo);
+
+    };
+
+    const translaiteType = function (type) {
+      if (type === palace) {
+        return Дворец;
+      } else if (type === flat) {
+        return Квартира;
+      } else if (type === house) {
+        return Дом;
+      } else if (type === bungalow) {
+        return Бунгало;
+      };
+
+      return card;
+  };
 };
 
-// //Для отрисовки карточки
-// let ideansertBeforeCards = document.querySelector('.map__filters-container');
-// let similarListmMapCards = document.querySelector('.map');
+//Для отрисовки карточки
+let ideansertBeforeCards = document.querySelector('.map__filters-container');
+let similarListmMapCards = document.querySelector('.map');
 // const fragmentCards = document.createDocumentFragment();
-// const renderCards = function (arr) {
-//   for (let i = 0; i < arr.length; i++) {
-//     const card = createTemplatePin(arr[i]);
-//     fragmentCards.appendChild(pin);
-//   }
-//
-//   similarListmMapCards.appendChild(fragmentCards);
-// };
+const renderCards = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    const card = createTemplateCards(arr[i]);
+  similarListmMapCards.appendChild(card);
 
-const translait = function (obj) {
-  const type = obj.offer.type;
-
-    if (type === palace) {
-      type.querySelector('popup__type').textContent = Дворец;
-    } else if (type === flat) {
-      type.querySelector('popup__type').textContent = Квартира;
-    } else if (type === house) {
-      type.querySelector('popup__type').textContent = Дом;
-    } else if (type === bungalow) {
-      type.querySelector('popup__type').textContent = Бунгало;
-    }
-
-
-    // switch (type) {
-    //   case palace:
-    //     type.querySelector('popup__type').textContent = Дворец;
-    //   break;
-    //
-    //   case flat:
-    //     type.querySelector('popup__type').textContent = Квартира;
-    //   break;
-    //
-    //   case house:
-    //     type.querySelector('popup__type').textContent = Дом;
-    //   break;
-    //
-    //   case bungalow:
-    //     type.querySelector('popup__type').textContent = Бунгало;
-    //   break;
-    //
-    // }
+};
+  // similarListmMapCards.appendChild(fragmentCards);
 };
 
 
 const data = generateData(8);
 console.log(data);
 renderPins(data);
+renderCards(data);
