@@ -130,9 +130,16 @@ let farmElement = document.querySelector('.ad-form');
 
 let disabledField = document.querySelectorAll('fieldset');
 const disabledL = function () {
-  for (let i = 0; i < disabledField.lenght; i++) {
+  for (let i = 0; i < disabledField.length; i++) {
     disabledField[i].setAttribute('disabled', 'disabled');
     console.log('Хай');
+  };
+};
+
+const disabledLi = function () {
+  for (let i = 0; i < disabledField.length; i++) {
+    disabledField[i].removeAttribute('disabled');
+    console.log('Хай 2');
   };
 };
 
@@ -140,7 +147,20 @@ document.addEventListener ('mousedown', function () {
   console.log('Привет');
   mapElement.classList.remove('map--faded');
   farmElement.classList.remove('ad-form--disabled');
+  disabledLi();
 });
+
+let pins = document.querySelector('.map__pin');
+pins.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+    mapElement.classList.remove('map--faded');
+    farmElement.classList.remove('ad-form--disabled');
+    disabledLi();
+    console.log('Надо надо!');
+  }
+});
+
 
 document.addEventListener('keydown', function (evt) {
   if (evt.key === 'Escape') {
@@ -148,12 +168,28 @@ document.addEventListener('keydown', function (evt) {
     mapElement.classList.add('map--faded');
     farmElement.classList.add('ad-form--disabled');
     disabledL();
-    // disabledField.disabled = true;
     console.log('Пока');
   }
 });
 
+const MIN_NAME_LENGTH = 30;
+const MAX_NAME_LENGTH = 100;
 
+let typeText = document.querySelector('input[type="text"]');
+
+typeText.addEventListener('input', function () {
+  var valueLength = typeText.value.length;
+
+  if (valueLength < MIN_NAME_LENGTH) {
+    typeText.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+  } else if (valueLength > MAX_NAME_LENGTH) {
+    typeText.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+  } else {
+    typeText.setCustomValidity('');
+  }
+
+  typeText.reportValidity();
+});
 
 const data = generateData(8);
 renderPins(data);
