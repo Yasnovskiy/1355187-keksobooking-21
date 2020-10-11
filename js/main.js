@@ -118,46 +118,42 @@ let mapElement = document.querySelector('.map');
 //   mapElement.insertBefore(card, filtersElement);
 // };
 
+let formElement = document.querySelector('.ad-form');
+let field = document.querySelectorAll('fieldset');
 
-
-
-
-
-
-let farmElement = document.querySelector('.ad-form');
-// let disabledField = document.querySelectorAll('fieldset');
-// let = ;
-
-let disabledField = document.querySelectorAll('fieldset');
-const disabledL = function () {
-  for (let i = 0; i < disabledField.length; i++) {
-    disabledField[i].setAttribute('disabled', 'disabled');
-    console.log('Хай');
-  };
+const fieldOff = function () {
+  for (let i = 0; i < field.length; i++) {
+    field[i].setAttribute('disabled', 'disabled');
+  }
 };
 
-const disabledLi = function () {
-  for (let i = 0; i < disabledField.length; i++) {
-    disabledField[i].removeAttribute('disabled');
-    console.log('Хай 2');
-  };
+const fieldOn = function () {
+  for (let i = 0; i < field.length; i++) {
+    field[i].removeAttribute('disabled');
+  }
 };
 
-document.addEventListener ('mousedown', function () {
-  console.log('Привет');
-  mapElement.classList.remove('map--faded');
-  farmElement.classList.remove('ad-form--disabled');
-  disabledLi();
-});
+const logMouseButton = function (e) {
+  if (typeof e === 'object') {
+    switch (e.button) {
+      case 0:
+        mapElement.classList.remove('map--faded');
+        formElement.classList.remove('ad-form--disabled');
+        fieldOn();
+        break;
+    }
+  }
+};
 
-let pins = document.querySelector('.map__pin');
+document.addEventListener('mousedown', logMouseButton);
+
+const pins = document.querySelector('.map__pin');
 pins.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
     evt.preventDefault();
     mapElement.classList.remove('map--faded');
-    farmElement.classList.remove('ad-form--disabled');
-    disabledLi();
-    console.log('Надо надо!');
+    formElement.classList.remove('ad-form--disabled');
+    fieldOff();
   }
 });
 
@@ -166,9 +162,8 @@ document.addEventListener('keydown', function (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     mapElement.classList.add('map--faded');
-    farmElement.classList.add('ad-form--disabled');
-    disabledL();
-    console.log('Пока');
+    formElement.classList.add('ad-form--disabled');
+    fieldOn();
   }
 });
 
@@ -178,17 +173,79 @@ const MAX_NAME_LENGTH = 100;
 let typeText = document.querySelector('input[type="text"]');
 
 typeText.addEventListener('input', function () {
-  var valueLength = typeText.value.length;
+  let valueLength = typeText.value.length;
 
   if (valueLength < MIN_NAME_LENGTH) {
-    typeText.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+    typeText.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) + ' симв.');
   } else if (valueLength > MAX_NAME_LENGTH) {
-    typeText.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+    typeText.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) + ' симв.');
   } else {
     typeText.setCustomValidity('');
   }
 
   typeText.reportValidity();
+});
+
+const typeElement = formElement.querySelector('[name="type"]');
+const priceElement = formElement.querySelector('[name="price"]');
+
+typeElement.addEventListener('change', function () {
+  let newValue = 0;
+  switch (typeElement.value) {
+    case 'bungalow':
+      newValue = newValue;
+      break;
+    case 'flat':
+      newValue = 1000;
+      break;
+    case 'house':
+      newValue = 5000;
+      break;
+    case 'palace':
+      newValue = 10000;
+      break;
+  }
+
+  priceElement.placeholder = newValue;
+  priceElement.minValue = newValue;
+});
+
+const timeInElement = document.querySelector('#timein');
+const timeOutElement = document.querySelector('#timeout');
+
+timeInElement.addEventListener('change', function () {
+  timeOutElement.value = timeInElement.value;
+});
+
+timeOutElement.addEventListener('change', function () {
+  timeInElement.value = timeOutElement.value;
+});
+
+const roomsElement = document.querySelector('[name="rooms"]');
+const capacityElement = document.querySelector('[name="capacity"]');
+
+roomsElement.addEventListener('change', function () {
+  let capacityElementOption = capacityElement.querySelectorAll('option');
+
+  for (let i = 0; i < capacityElementOption.length; i++) {
+    capacityElementOption[i].setAttribute('disabled', 'disabled');
+  }
+  if (roomsElement.value === '1') {
+    capacityElementOption[2].removeAttribute('disabled');
+    capacityElement.value = '1';
+  } else if (roomsElement.value === '2') {
+    capacityElementOption[2].removeAttribute('disabled');
+    capacityElementOption[1].removeAttribute('disabled');
+    capacityElement.value = '2';
+  } else if (roomsElement.value === '3') {
+    capacityElementOption[2].removeAttribute('disabled');
+    capacityElementOption[1].removeAttribute('disabled');
+    capacityElementOption[0].removeAttribute('disabled');
+    capacityElement.value = '3';
+  } else if (roomsElement.value === '100') {
+    capacityElementOption[3].removeAttribute('disabled');
+    capacityElement.value = '0';
+  }
 });
 
 const data = generateData(8);
