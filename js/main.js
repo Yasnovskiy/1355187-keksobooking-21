@@ -3,7 +3,7 @@ const getRandomInt = function (max) {
   return Math.floor(Math.random() * max);
 };
 
-let titleArray = ['Title1', 'Title2', 'Title3'];
+let titleArray = ['Title 1', 'Title 2', 'Title 3'];
 let photosArray = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 let checkArray = ['12:00', '13:00', '14:00'];
 let featuresArray = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -71,7 +71,7 @@ const createTemplateCards = function (obj) {
 
   card.querySelector('.popup__title').textContent = obj.offer.title;
   card.querySelector('.popup__text--address').textContent = obj.offer.address;
-  card.querySelector('.popup__text--price').textContent = obj.offer.price + '₽';
+  card.querySelector('.popup__text--price').textContent = obj.offer.price + ' ₽';
   card.querySelector('.popup__type').textContent = translaiteType(obj.offer.type);
   card.querySelector('.popup__text--capacity').textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей';
   card.querySelector('.popup__text--time').textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
@@ -111,13 +111,144 @@ const translaiteType = function (type) {
   return type;
 };
 
-let filtersElemen = document.querySelector('.map__filters-container');
-let mapElemen = document.querySelector('.map');
+let filtersElement = document.querySelector('.map__filters-container');
+let mapElement = document.querySelector('.map');
 const renderCard = function (obj) {
   const card = createTemplateCards(obj);
-  mapElemen.insertBefore(card, filtersElemen);
+  mapElement.insertBefore(card, filtersElement);
 };
 
+let formElement = document.querySelector('.ad-form');
+let field = document.querySelectorAll('fieldset');
+
+const fieldOn = function () {
+  for (let i = 0; i < field.length; i++) {
+    field[i].removeAttribute('disabled');
+  }
+};
+
+const activatePage = function () {
+  mapElement.classList.remove('map--faded');
+  formElement.classList.remove('ad-form--disabled');
+  fieldOn();
+};
+
+let mainPins = document.querySelector('.map__pin--main');
+mainPins.addEventListener('mousedown', function(evt)  {
+  if (evt.button === 0) {
+    evt.preventDefault();
+    activatePage();
+  }
+});
+
+mainPins.addEventListener('click', function (evt) {
+  activatePage();
+});
+
+// document.addEventListener('keydown', function (evt) {
+//   if (evt.key === 'Escape') {
+//     evt.preventDefault();
+//     mapElement.classList.add('map--faded');
+//     formElement.classList.add('ad-form--disabled');
+//     fieldOn();
+//   }
+// });
+
+const MIN_NAME_LENGTH = 30;
+const MAX_NAME_LENGTH = 100;
+
+let typeText = document.querySelector('input[type="text"]');
+
+typeText.addEventListener('input', function () {
+  let valueLength = typeText.value.length;
+
+  if (valueLength < MIN_NAME_LENGTH) {
+    typeText.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) + ' симв.');
+  } else if (valueLength > MAX_NAME_LENGTH) {
+    typeText.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) + ' симв.');
+  } else {
+    typeText.setCustomValidity('');
+  }
+
+  typeText.reportValidity();
+});
+
+const typeElement = formElement.querySelector('[name="type"]');
+const priceElement = formElement.querySelector('[name="price"]');
+
+typeElement.addEventListener('change', function () {
+  let newValue = 0;
+  switch (typeElement.value) {
+    case 'bungalow':
+      newValue = newValue;
+      break;
+    case 'flat':
+      newValue = 1000;
+      break;
+    case 'house':
+      newValue = 5000;
+      break;
+    case 'palace':
+      newValue = 10000;
+      break;
+  }
+
+  priceElement.placeholder = newValue;
+  priceElement.minValue = newValue;
+});
+
+const timeInElement = document.querySelector('#timein');
+const timeOutElement = document.querySelector('#timeout');
+
+timeInElement.addEventListener('change', function () {
+  timeOutElement.value = timeInElement.value;
+});
+
+timeOutElement.addEventListener('change', function () {
+  timeInElement.value = timeOutElement.value;
+});
+
+const roomsElement = document.querySelector('[name="rooms"]');
+const capacityElement = document.querySelector('[name="capacity"]');
+
+let disabledRooms = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
+
+let capacityElementOption = capacityElement.querySelectorAll('option');
+let disabledCapacity = function () {
+  for (let i = 0; i < capacityElementOption.length; i++) {
+    capacityElementOption[i].setAttribute('disabled', 'disabled');
+  }
+
+  const toEnable = disabledRooms[roomsElement.value];
+
+  for (let i = 0; i < capacityElementOption.length; i++) {
+    const option = capacityElementOption[i];
+    if (toEnable.includes(option.value)) {
+      option.removeAttribute('disabled');
+    }
+  }
+};
+
+roomsElement.addEventListener('change', function () {
+  disabledCapacity();
+
+  if (roomsElement.value === '1') {
+    capacityElement.value = '1';
+  } else if (roomsElement.value === '2') {
+    capacityElement.value = '2';
+  } else if (roomsElement.value === '3') {
+    capacityElement.value = '3';
+  } else if (roomsElement.value === '100') {
+    capacityElement.value = '0';
+  }
+});
+
+disabledCapacity();
 const data = generateData(8);
 renderPins(data);
-renderCard(data[0]);
+// renderCard(data[0]);
