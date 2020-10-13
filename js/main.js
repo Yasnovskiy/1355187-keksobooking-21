@@ -121,52 +121,38 @@ const renderCard = function (obj) {
 let formElement = document.querySelector('.ad-form');
 let field = document.querySelectorAll('fieldset');
 
-const fieldOff = function () {
-  for (let i = 0; i < field.length; i++) {
-    field[i].setAttribute('disabled', 'disabled');
-  }
-};
-
 const fieldOn = function () {
   for (let i = 0; i < field.length; i++) {
     field[i].removeAttribute('disabled');
   }
 };
 
-const logMouseButton = function (e) {
-  if (typeof e === 'object') {
-    switch (e.button) {
-      case 0:
-        mapElement.classList.remove('map--faded');
-        formElement.classList.remove('ad-form--disabled');
-        fieldOn();
-
-        break;
-    }
-  }
+const activatePage = function () {
+  mapElement.classList.remove('map--faded');
+  formElement.classList.remove('ad-form--disabled');
+  fieldOn();
 };
 
-document.addEventListener('mousedown', logMouseButton);
-
-const pins = document.querySelector('.map__pin');
-pins.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
+let mainPins = document.querySelector('.map__pin--main');
+mainPins.addEventListener('mousedown', function(evt)  {
+  if (evt.button === 0) {
     evt.preventDefault();
-    mapElement.classList.remove('map--faded');
-    formElement.classList.remove('ad-form--disabled');
-    fieldOff();
+    activatePage();
   }
 });
 
-
-document.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    mapElement.classList.add('map--faded');
-    formElement.classList.add('ad-form--disabled');
-    fieldOn();
-  }
+mainPins.addEventListener('click', function (evt) {
+  activatePage();
 });
+
+// document.addEventListener('keydown', function (evt) {
+//   if (evt.key === 'Escape') {
+//     evt.preventDefault();
+//     mapElement.classList.add('map--faded');
+//     formElement.classList.add('ad-form--disabled');
+//     fieldOn();
+//   }
+// });
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -233,22 +219,23 @@ let disabledRooms = {
 };
 
 let capacityElementOption = capacityElement.querySelectorAll('option');
-let startingOff = function () {
+let disabledCapacity = function () {
   for (let i = 0; i < capacityElementOption.length; i++) {
     capacityElementOption[i].setAttribute('disabled', 'disabled');
+  }
+
+  const toEnable = disabledRooms[roomsElement.value];
+
+  for (let i = 0; i < capacityElementOption.length; i++) {
+    const option = capacityElementOption[i];
+    if (toEnable.includes(option.value)) {
+      option.removeAttribute('disabled');
+    }
   }
 };
 
 roomsElement.addEventListener('change', function () {
-  const name = disabledRooms[roomsElement.value];
-  startingOff();
-  for (let i = 0; i < capacityElementOption.length; i++) {
-    const option = capacityElementOption[i];
-
-    if (name.includes(option.value)) {
-      option.removeAttribute('disabled');
-    }
-  }
+  disabledCapacity();
 
   if (roomsElement.value === '1') {
     capacityElement.value = '1';
@@ -261,6 +248,7 @@ roomsElement.addEventListener('change', function () {
   }
 });
 
+disabledCapacity();
 const data = generateData(8);
 renderPins(data);
 // renderCard(data[0]);
