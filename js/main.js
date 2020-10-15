@@ -51,6 +51,12 @@ const createTemplatePin = function (obj) {
   pin.style.top = obj.location.y + 'px';
   pin.querySelector('img').src = obj.author.avatar;
 
+  pin.addEventListener('click', function () {
+    if (dragged === true) {
+      renderCard(obj);
+    };
+  });
+
   return pin;
 };
 
@@ -100,8 +106,28 @@ const createTemplateCards = function (obj) {
     photosList.appendChild(photo);
   }
 
+  card.querySelector('.popup__close').addEventListener('click', function () {
+    closeCard();
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeCard();
+    }
+  });
+
+
   return card;
 };
+
+const closeCard = function () {
+  let cardFin = document.querySelector('article');
+  cardFin.parentNode.removeChild(cardFin)
+};
+
+// cardFin.removeChild(cardFin);
+
 
 const translaiteType = function (type) {
   if (type === 'palace') {
@@ -122,6 +148,7 @@ let mapElement = document.querySelector('.map');
 const renderCard = function (obj) {
   const card = createTemplateCards(obj);
   mapElement.insertBefore(card, filtersElement);
+  // closeCard();
 };
 
 let formElement = document.querySelector('.ad-form');
@@ -146,8 +173,10 @@ const activatePage = function () {
 };
 
 let mainPins = document.querySelector('.map__pin--main');
-mainPins.addEventListener('mousedown', function(evt)  {
+let dragged = false;
+mainPins.addEventListener('mousedown', function (evt) {
   if (evt.button === 0) {
+    dragged = true;
     evt.preventDefault();
     activatePage();
   }
@@ -260,12 +289,11 @@ roomsElement.addEventListener('change', function () {
   }
 });
 
-similarListmMapPins.addEventListener('click', function () {
-  renderCard(data[0]);
-});
+// similarListmMapPins.addEventListener('click', function () {
+//   renderCard(data[0]);
+// });
 
 fieldOff();
 disabledCapacity();
 const data = generateData(8);
 renderPins(data);
-
