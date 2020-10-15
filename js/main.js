@@ -44,7 +44,7 @@ const generateData = function (num) {
   return objectArray;
 };
 
-let templatePin = document.querySelector('#pin').content.querySelector('.map__pin ');
+let templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
 const createTemplatePin = function (obj) {
   const pin = templatePin.cloneNode(true);
   pin.style.left = obj.location.x + 'px';
@@ -62,6 +62,12 @@ const renderPins = function (arr) {
     fragment.appendChild(pin);
   }
   similarListmMapPins.appendChild(fragment);
+
+  // const openCard = document.querySelector('.map__pin');
+  // similarListmMapPins.addEventListener('click', function () {
+  //   renderCard(data[0]);
+  // });
+
 };
 
 let templateCards = document.querySelector('#card').content.querySelector('.map__card');
@@ -127,6 +133,12 @@ const fieldOn = function () {
   }
 };
 
+const fieldOff = function () {
+  for (let i = 0; i < field.length; i++) {
+    field[i].setAttribute('disabled', 'disabled');
+  }
+};
+
 const activatePage = function () {
   mapElement.classList.remove('map--faded');
   formElement.classList.remove('ad-form--disabled');
@@ -180,7 +192,7 @@ typeElement.addEventListener('change', function () {
   let newValue = 0;
   switch (typeElement.value) {
     case 'bungalow':
-      newValue = newValue;
+      newValue = 0;
       break;
     case 'flat':
       newValue = 1000;
@@ -248,7 +260,12 @@ roomsElement.addEventListener('change', function () {
   }
 });
 
+similarListmMapPins.addEventListener('click', function () {
+  renderCard(data[0]);
+});
+
+fieldOff();
 disabledCapacity();
 const data = generateData(8);
 renderPins(data);
-// renderCard(data[0]);
+
