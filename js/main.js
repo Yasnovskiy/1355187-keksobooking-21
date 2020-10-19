@@ -44,12 +44,16 @@ const generateData = function (num) {
   return objectArray;
 };
 
-let templatePin = document.querySelector('#pin').content.querySelector('.map__pin ');
+let templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
 const createTemplatePin = function (obj) {
   const pin = templatePin.cloneNode(true);
   pin.style.left = obj.location.x + 'px';
   pin.style.top = obj.location.y + 'px';
   pin.querySelector('img').src = obj.author.avatar;
+
+  pin.addEventListener('click', function () {
+    renderCard(obj);
+  });
 
   return pin;
 };
@@ -94,7 +98,26 @@ const createTemplateCards = function (obj) {
     photosList.appendChild(photo);
   }
 
+  card.querySelector('.popup__close').addEventListener('click', function () {
+    closeCard();
+  });
+
   return card;
+};
+
+const onDocumentKeydown = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeCard();
+  }
+};
+
+const closeCard = function () {
+  const card = mapElement.querySelector('.map__card');
+  if (card) {
+    card.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+  }
 };
 
 const translaiteType = function (type) {
@@ -113,9 +136,12 @@ const translaiteType = function (type) {
 
 let filtersElement = document.querySelector('.map__filters-container');
 let mapElement = document.querySelector('.map');
+
 const renderCard = function (obj) {
+  closeCard();
   const card = createTemplateCards(obj);
   mapElement.insertBefore(card, filtersElement);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 let formElement = document.querySelector('.ad-form');
@@ -127,14 +153,26 @@ const fieldOn = function () {
   }
 };
 
+const fieldOff = function () {
+  for (let i = 0; i < field.length; i++) {
+    field[i].setAttribute('disabled', 'disabled');
+  }
+};
+
+let isActive = false;
 const activatePage = function () {
-  mapElement.classList.remove('map--faded');
-  formElement.classList.remove('ad-form--disabled');
-  fieldOn();
+  if (!isActive) {
+    isActive = true;
+    mapElement.classList.remove('map--faded');
+    formElement.classList.remove('ad-form--disabled');
+    fieldOn();
+    const data = generateData(8);
+    renderPins(data);
+  }
 };
 
 let mainPins = document.querySelector('.map__pin--main');
-mainPins.addEventListener('mousedown', function(evt)  {
+mainPins.addEventListener('mousedown', function (evt) {
   if (evt.button === 0) {
     evt.preventDefault();
     activatePage();
@@ -144,15 +182,6 @@ mainPins.addEventListener('mousedown', function(evt)  {
 mainPins.addEventListener('click', function (evt) {
   activatePage();
 });
-
-// document.addEventListener('keydown', function (evt) {
-//   if (evt.key === 'Escape') {
-//     evt.preventDefault();
-//     mapElement.classList.add('map--faded');
-//     formElement.classList.add('ad-form--disabled');
-//     fieldOn();
-//   }
-// });
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -180,7 +209,7 @@ typeElement.addEventListener('change', function () {
   let newValue = 0;
   switch (typeElement.value) {
     case 'bungalow':
-      newValue = newValue;
+      newValue = 0;
       break;
     case 'flat':
       newValue = 1000;
@@ -248,7 +277,5 @@ roomsElement.addEventListener('change', function () {
   }
 });
 
+fieldOff();
 disabledCapacity();
-const data = generateData(8);
-renderPins(data);
-// renderCard(data[0]);
