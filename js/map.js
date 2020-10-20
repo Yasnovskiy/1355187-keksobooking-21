@@ -1,20 +1,16 @@
 'use strict';
 
 (function () {
-  // let filtersElement = document.querySelector('.map__filters-container');
-  // let mapElement = document.querySelector('.map');
   let mainPins = document.querySelector('.map__pin--main');
 
   mainPins.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
       evt.preventDefault();
-      // activatePage();
       window.form.activate();
     }
   });
 
   mainPins.addEventListener('click', function (evt) {
-    // activatePage();
     window.form.activate();
   });
 
@@ -22,15 +18,15 @@
   mainPins.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    var startCoords = {
+    const startCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
 
-    var onMouseMove = function (moveEvt) {
+    const onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var shift = {
+      const shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
       };
@@ -44,7 +40,7 @@
       mainPins.style.left = (mainPins.offsetLeft - shift.x) + 'px';
     };
 
-    var onMouseUp = function (upEvt) {
+    const onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', onMouseMove);
