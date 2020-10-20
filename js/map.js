@@ -18,7 +18,7 @@
   mainPins.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    const startCoords = {
+    let startCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
@@ -26,7 +26,7 @@
     const onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      const shift = {
+      let shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
       };
