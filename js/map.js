@@ -11,6 +11,7 @@
   });
 
   mainPins.addEventListener('click', function (evt) {
+    evt.preventDefault();
     window.form.activate();
   });
 

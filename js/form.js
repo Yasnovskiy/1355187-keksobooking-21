@@ -107,6 +107,7 @@
       window.main.on();
       const data = window.data.generate(8);
       window.pin.render(data);
+      disabledCapacity();
     }
   };
 
