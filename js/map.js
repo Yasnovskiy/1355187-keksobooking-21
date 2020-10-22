@@ -37,8 +37,28 @@
         y: moveEvt.clientY
       };
 
-      mainPins.style.top = (mainPins.offsetTop - shift.y) + 'px';
-      mainPins.style.left = (mainPins.offsetLeft - shift.x) + 'px';
+      let nixeY = mainPins.offsetTop - shift.y;
+      let nixeX = mainPins.offsetLeft - shift.x;
+
+      if (nixeX < 0) {
+        nixeX = 0;
+      }
+
+      if (nixeX > 1135) {
+        nixeX = 1135;
+      }
+
+      if (nixeY < 130) {
+        nixeY = 130;
+      }
+
+      if (nixeY > 620) {
+        nixeY = 620;
+      }
+
+
+      mainPins.style.top = nixeY + 'px';
+      mainPins.style.left = nixeX + 'px';
 
     };
 
