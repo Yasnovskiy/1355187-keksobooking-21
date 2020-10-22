@@ -1,20 +1,20 @@
 'use strict';
 
 (function () {
+  let mapElement = document.querySelector('.map');
   let mainPins = document.querySelector('.map__pin--main');
 
   mainPins.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
       evt.preventDefault();
-      window.form.activate();
+      window.main.activatePage();
     }
   });
 
   mainPins.addEventListener('click', function (evt) {
     evt.preventDefault();
-    window.form.activate();
+    window.main.activatePage();
   });
-
 
   mainPins.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -39,6 +39,7 @@
 
       mainPins.style.top = (mainPins.offsetTop - shift.y) + 'px';
       mainPins.style.left = (mainPins.offsetLeft - shift.x) + 'px';
+
     };
 
     const onMouseUp = function (upEvt) {
@@ -52,4 +53,11 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  const activate = function () {
+    mapElement.classList.remove('map--faded');
+  };
+
+  window.map = {
+    activate: activate
+  };
 })();

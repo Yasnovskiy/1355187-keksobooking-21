@@ -25,11 +25,25 @@
     }
   };
 
+  let isActive = false;
+  const activatePage = function () {
+    if (!isActive) {
+      isActive = true;
+      window.form.activate();
+      window.map.activate();
+      formOn();
+
+      const data = window.data.generate(8);
+      window.pin.render(data);
+    }
+  };
+
   formOff();
 
   window.main = {
     on: formOn,
-    off: formOff
+    off: formOff,
+    activatePage: activatePage
   };
 
 })();

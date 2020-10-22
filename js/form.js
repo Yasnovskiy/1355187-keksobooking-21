@@ -96,23 +96,14 @@
   });
 
   let formElement = document.querySelector('.ad-form');
-  let mapElement = document.querySelector('.map');
 
-  let isActive = false;
-  const activatePage = function () {
-    if (!isActive) {
-      isActive = true;
-      mapElement.classList.remove('map--faded');
-      formElement.classList.remove('ad-form--disabled');
-      window.main.on();
-      const data = window.data.generate(8);
-      window.pin.render(data);
-      disabledCapacity();
-    }
+  const activate = function () {
+    formElement.classList.remove('ad-form--disabled');
+    disabledCapacity();
   };
 
   window.form = {
     disabled: disabledCapacity,
-    activate: activatePage
+    activate: activate
   };
 })();
