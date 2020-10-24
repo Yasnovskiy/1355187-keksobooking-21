@@ -3,6 +3,9 @@
 (function () {
   let templateCards = document.querySelector('#card').content.querySelector('.map__card');
   let templatePhoto = templateCards.querySelector('.popup__photo');
+  let filtersElement = document.querySelector('.map__filters-container');
+  let mapElement = document.querySelector('.map');
+
   const createTemplateCards = function (obj) {
     const card = templateCards.cloneNode(true);
 
@@ -67,9 +70,6 @@
     return type;
   };
 
-  let filtersElement = document.querySelector('.map__filters-container');
-  let mapElement = document.querySelector('.map');
-
   const renderCard = function (obj) {
     closeCard();
     const card = createTemplateCards(obj);
@@ -80,5 +80,4 @@
   window.card = {
     render: renderCard
   };
-
 })();

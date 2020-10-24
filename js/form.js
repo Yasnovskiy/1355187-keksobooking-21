@@ -3,7 +3,15 @@
 (function () {
   const MIN_NAME_LENGTH = 30;
   const MAX_NAME_LENGTH = 100;
-
+  let typeElement = document.querySelector('[name="type"]');
+  let priceElement = document.querySelector('[name="price"]');
+  let timeInElement = document.querySelector('#timein');
+  let timeOutElement = document.querySelector('#timeout');
+  let roomsElement = document.querySelector('[name="rooms"]');
+  let capacityElement = document.querySelector('[name="capacity"]');
+  let capacityElementOption = capacityElement.querySelectorAll('option');
+  let addressElement = document.querySelector('[name="address"]');
+  let formElement = document.querySelector('.ad-form');
   let typeText = document.querySelector('input[type="text"]');
 
   typeText.addEventListener('input', function () {
@@ -19,9 +27,6 @@
 
     typeText.reportValidity();
   });
-
-  const typeElement = document.querySelector('[name="type"]');
-  const priceElement = document.querySelector('[name="price"]');
 
   typeElement.addEventListener('change', function () {
     let newValue = 0;
@@ -44,9 +49,6 @@
     priceElement.minValue = newValue;
   });
 
-  const timeInElement = document.querySelector('#timein');
-  const timeOutElement = document.querySelector('#timeout');
-
   timeInElement.addEventListener('change', function () {
     timeOutElement.value = timeInElement.value;
   });
@@ -55,9 +57,6 @@
     timeInElement.value = timeOutElement.value;
   });
 
-  const roomsElement = document.querySelector('[name="rooms"]');
-  const capacityElement = document.querySelector('[name="capacity"]');
-
   let disabledRooms = {
     '1': ['1'],
     '2': ['1', '2'],
@@ -65,8 +64,7 @@
     '100': ['0']
   };
 
-  let capacityElementOption = capacityElement.querySelectorAll('option');
-  let disabledCapacity = function () {
+  const disabledCapacity = function () {
     for (let i = 0; i < capacityElementOption.length; i++) {
       capacityElementOption[i].setAttribute('disabled', 'disabled');
     }
@@ -95,15 +93,20 @@
     }
   });
 
-  let formElement = document.querySelector('.ad-form');
-
   const activate = function () {
     formElement.classList.remove('ad-form--disabled');
     disabledCapacity();
   };
 
+  const addressRecord = function (X, Y) {
+    addressElement.value = ' X ' + X + ' , Y ' + (Y + 10);
+
+    return addressElement;
+  };
+
   window.form = {
     disabled: disabledCapacity,
-    activate: activate
+    activate: activate,
+    address: addressRecord
   };
 })();

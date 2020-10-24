@@ -1,15 +1,15 @@
 'use strict';
 
 (function () {
-  const getRandomInt = function (max) {
-    return Math.floor(Math.random() * max);
-  };
-
   let titleArray = ['Title 1', 'Title 2', 'Title 3'];
   let photosArray = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
   let checkArray = ['12:00', '13:00', '14:00'];
   let featuresArray = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   let typeArray = ['palace', 'flat', 'house', 'bungalow'];
+
+  const getRandomInt = function (max) {
+    return Math.floor(Math.random() * max);
+  };
 
   let generateObject = function (num) {
     const ad = {
@@ -49,5 +49,4 @@
   window.data = {
     generate: generateData
   };
-
 })();
