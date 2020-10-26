@@ -2,6 +2,9 @@
 
 (function () {
   let templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
+  let similarListmMapPins = document.querySelector('.map__pins');
+  let fragment = document.createDocumentFragment();
+
   const createTemplatePin = function (obj) {
     const pin = templatePin.cloneNode(true);
     pin.style.left = obj.location.x + 'px';
@@ -15,8 +18,6 @@
     return pin;
   };
 
-  let similarListmMapPins = document.querySelector('.map__pins');
-  const fragment = document.createDocumentFragment();
   const renderPins = function (arr) {
     for (let i = 0; i < arr.length; i++) {
       const pin = createTemplatePin(arr[i]);

@@ -37,29 +37,29 @@
         y: moveEvt.clientY
       };
 
-      let nixeY = mainPins.offsetTop - shift.y;
-      let nixeX = mainPins.offsetLeft - shift.x;
+      let nextY = mainPins.offsetTop - shift.y;
+      let nextX = mainPins.offsetLeft - shift.x;
 
-      if (nixeX < 0) {
-        nixeX = 0;
+      if (nextX < 0) {
+        nextX = 0;
       }
 
-      if (nixeX > 1135) {
-        nixeX = 1135;
+      if (nextX > 1135) {
+        nextX = 1135;
       }
 
-      if (nixeY < 130) {
-        nixeY = 130;
+      if (nextY < 120) {
+        nextY = 120;
       }
 
-      if (nixeY > 620) {
-        nixeY = 620;
+      if (nextY > 620) {
+        nextY = 620;
       }
 
+      mainPins.style.top = nextY + 'px';
+      mainPins.style.left = nextX + 'px';
 
-      mainPins.style.top = nixeY + 'px';
-      mainPins.style.left = nixeX + 'px';
-
+      window.form.address(nextX, nextY);
     };
 
     const onMouseUp = function (upEvt) {
@@ -71,13 +71,24 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+
   });
+
+  const getDataPin = function () {
+    let dataPit = {
+      x: mainPins.offsetLeft,
+      y: mainPins.offsetTop
+    };
+
+    return dataPit;
+  };
 
   const activate = function () {
     mapElement.classList.remove('map--faded');
   };
 
   window.map = {
-    activate: activate
+    activate: activate,
+    getdatapin: getDataPin
   };
 })();

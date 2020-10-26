@@ -10,7 +10,6 @@
     }
 
     for (let i = 0; i < child.length; i++) {
-
       child[i].removeAttribute('disabled');
     }
   };
@@ -31,6 +30,8 @@
       isActive = true;
       window.form.activate();
       window.map.activate();
+      const dataPin = window.map.getdatapin();
+      window.form.address(dataPin.x, dataPin.y);
       formOn();
 
       const data = window.data.generate(8);
@@ -45,6 +46,4 @@
     off: formOff,
     activatePage: activatePage
   };
-
 })();
-
