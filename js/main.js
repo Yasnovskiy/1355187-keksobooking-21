@@ -34,8 +34,10 @@
       window.form.address(dataPin.x, dataPin.y);
       formOn();
 
-      const data = window.data.generate(8);
-      window.pin.render(data);
+      // const data = window.data.generate(8);
+      // window.load(window.pin.render(), window.pin.error());
+      // // window.pin.render(data);
+      // window.load(data);
     }
   };
 
