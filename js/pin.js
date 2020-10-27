@@ -27,23 +27,19 @@
     similarListmMapPins.appendChild(fragment);
   };
 
-  const errorHandler = function (errorMessage) {
-    let node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
+  // const errorHandler = function (errorMessage) {
+  //   let templateError = document.querySelector('#error').content.querySelector('.error');
+  //   let mapElement = document.querySelector('.map');
+  //   let filtersElement = document.querySelector('.map__filters-container');
+  //   let errorA = templateError.cloneNode(true);
 
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-  window.load(renderPins, errorHandler);
+  //   errorA.querySelector('.error__message').textContent = errorMessage;
+  //   mapElement.insertBefore(errorA, filtersElement);
+  // };
 
   window.pin = {
-    render: renderPins,
-    error: errorHandler
+    render: renderPins
+    // error: errorHandler
   };
 
 })();

@@ -34,11 +34,16 @@
       window.form.address(dataPin.x, dataPin.y);
       formOn();
 
-      // const data = window.data.generate(8);
-      // window.load(window.pin.render(), window.pin.error());
-      // // window.pin.render(data);
-      // window.load(data);
+      window.load(onSuccess, onError);
     }
+  };
+
+  const onSuccess = function (res) {
+    window.pin.render(res);
+  };
+
+  const onError = function (res) {
+    window.message.error(res);
   };
 
   formOff();
