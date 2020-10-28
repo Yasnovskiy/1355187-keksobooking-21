@@ -34,9 +34,16 @@
       window.form.address(dataPin.x, dataPin.y);
       formOn();
 
-      const data = window.data.generate(8);
-      window.pin.render(data);
+      window.load(onSuccess, onError);
     }
+  };
+
+  const onSuccess = function (res) {
+    window.pin.render(res);
+  };
+
+  const onError = function (res) {
+    window.message.showError(res);
   };
 
   formOff();
