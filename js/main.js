@@ -43,7 +43,7 @@
   };
 
   const onError = function (res) {
-    window.message.error(res);
+    window.message.showError(res);
   };
 
   formOff();

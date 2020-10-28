@@ -27,19 +27,8 @@
     similarListmMapPins.appendChild(fragment);
   };
 
-  // const errorHandler = function (errorMessage) {
-  //   let templateError = document.querySelector('#error').content.querySelector('.error');
-  //   let mapElement = document.querySelector('.map');
-  //   let filtersElement = document.querySelector('.map__filters-container');
-  //   let errorA = templateError.cloneNode(true);
-
-  //   errorA.querySelector('.error__message').textContent = errorMessage;
-  //   mapElement.insertBefore(errorA, filtersElement);
-  // };
-
   window.pin = {
     render: renderPins
-    // error: errorHandler
   };
 
 })();

@@ -2,28 +2,36 @@
 
 (function () {
   let templateError = document.querySelector('#error').content.querySelector('.error');
-  let mapElement = document.querySelector('.map');
-  let filtersElement = document.querySelector('.map__filters-container');
-  // let buttonErorr = templateError.querySelector('.error__button');
-  // let buttonErorr = document.querySelector('.error__button');
+  let main = document.querySelector('main');
 
-  const errorHandler = function (errorMessage) {
+  const showError = function (errorMessage) {
     let error = templateError.cloneNode(true);
     error.querySelector('.error__message').textContent = errorMessage;
+    error.addEventListener('click', function () {
+      closeError();
+    });
 
-    mapElement.insertBefore(error, filtersElement);
+    document.addEventListener('keydown', onDocumentKeydown);
+
+    main.appendChild(error);
   };
 
-  const buttonErorr = function (evt) {
-    let error = document.querySelector('.error');
+  const onDocumentKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      closeError();
+    }
+  };
 
-    evt.preventDefault();
-    error.remove();
-    console.log('Привет');
+  const closeError = function () {
+    let error = main.querySelector('.error');
+    if (error) {
+      error.remove();
+      document.removeEventListener('keydown', onDocumentKeydown);
+    }
   };
 
   window.message = {
-    error: errorHandler,
-    closeError: buttonErorr
+    showError: showError,
+    closeError: closeError
   };
 })();
