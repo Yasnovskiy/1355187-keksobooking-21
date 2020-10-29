@@ -104,6 +104,13 @@
     return addressElement;
   };
 
+  formElement.addEventListener('submit', function (evt) {
+    window.upload(new FormData(formElement), function () {
+      console.log('ДА да ДА да');
+    });
+    evt.preventDefault();
+  });
+
   window.form = {
     disabled: disabledCapacity,
     activate: activate,

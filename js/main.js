@@ -39,7 +39,7 @@
   };
 
   const onSuccess = function (res) {
-    window.pin.render(res);
+    window.pin.render(res.slice(0, 8));
   };
 
   const onError = function (res) {
