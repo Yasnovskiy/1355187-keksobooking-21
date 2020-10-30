@@ -11,8 +11,10 @@
   let capacityElement = document.querySelector('[name="capacity"]');
   let capacityElementOption = capacityElement.querySelectorAll('option');
   let addressElement = document.querySelector('[name="address"]');
-  let formElement = document.querySelector('.ad-form');
+  let formElementOne = document.querySelector('.map__filters');
+  let formElementTwo = document.querySelector('.ad-form');
   let typeText = document.querySelector('input[type="text"]');
+  let onClear = document.querySelector('.ad-form__reset');
 
   typeText.addEventListener('input', function () {
     let valueLength = typeText.value.length;
@@ -94,7 +96,7 @@
   });
 
   const activate = function () {
-    formElement.classList.remove('ad-form--disabled');
+    formElementTwo.classList.remove('ad-form--disabled');
     disabledCapacity();
   };
 
@@ -104,14 +106,46 @@
     return addressElement;
   };
 
-  formElement.addEventListener('submit', function (evt) {
-    evt.stopPropagation();
-    window.upload(new FormData(formElement), function () {
-      console.log('ДА да ДА да');
-    });
+
+  formElementTwo.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    // evt.stopPropagation();
+    evt.stopPropagation();
+    window.upload(new FormData(formElementTwo), function () {
+      // window.upload(onSuccess, onError);
+      formElementTwo.reset();
+    });
   });
+
+  const onSuccess = function (res) {
+    window.message.submittedForm(res);
+  };
+
+  const onError = function (res) {
+    window.message.showError(res);
+  };
+
+  onClear.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    formElementOne.reset();
+    formElementTwo.reset();
+    mainPinStart();
+  });
+
+  let mainPin = document.querySelector('.map__pin--main');
+
+  const mainPinStart = function () {
+    // let pinX = mainPin.style.left;
+    // let pinY = mainPin.style.top;
+
+    let pinX = '570px';
+    let pinY = '375px';
+
+    mainPin.style.left = pinX;
+    mainPin.style.top = pinY;
+
+    addressElement.value = ' X 570 , Y 375';
+
+  };
 
   window.form = {
     disabled: disabledCapacity,
