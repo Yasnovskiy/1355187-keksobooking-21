@@ -73,12 +73,12 @@
 
   };
 
-  let button = document.querySelector('.ad-form__submit');
+  // let button = document.querySelector('.ad-form__submit');
 
-  button.addEventListener('click', function (evt) {
-    evt.preventDefault();
-    renderForm();
-  });
+  // button.addEventListener('click', function (evt) {
+  //   evt.preventDefault();
+  //   renderForm();
+  // });
 
   window.message = {
     showError: showError,

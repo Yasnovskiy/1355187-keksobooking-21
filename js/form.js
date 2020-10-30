@@ -105,10 +105,12 @@
   };
 
   formElement.addEventListener('submit', function (evt) {
+    evt.stopPropagation();
     window.upload(new FormData(formElement), function () {
       console.log('ДА да ДА да');
     });
     evt.preventDefault();
+    // evt.stopPropagation();
   });
 
   window.form = {
