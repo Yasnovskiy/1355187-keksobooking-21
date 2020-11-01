@@ -11,7 +11,6 @@
   let capacityElement = document.querySelector('[name="capacity"]');
   let capacityElementOption = capacityElement.querySelectorAll('option');
   let addressElement = document.querySelector('[name="address"]');
-  let formElementOne = document.querySelector('.map__filters');
   let formElementTwo = document.querySelector('.ad-form');
   let typeText = document.querySelector('input[type="text"]');
   let onClear = document.querySelector('.ad-form__reset');
@@ -30,26 +29,37 @@
     typeText.reportValidity();
   });
 
-  typeElement.addEventListener('change', function () {
+  const pressPrice = function () {
     let newValue = 0;
     switch (typeElement.value) {
       case 'bungalow':
         newValue = 0;
+        priceElement.setAttribute('min', newValue);
         break;
       case 'flat':
         newValue = 1000;
+        priceElement.setAttribute('min', newValue);
         break;
       case 'house':
         newValue = 5000;
+        priceElement.setAttribute('min', newValue);
         break;
       case 'palace':
         newValue = 10000;
+        priceElement.setAttribute('min', newValue);
         break;
     }
 
     priceElement.placeholder = newValue;
     priceElement.minValue = newValue;
-  });
+  };
+
+  const startPrice = function () {
+    priceElement.min = 1000;
+    priceElement.placeholder = 1000;
+  };
+
+  typeElement.addEventListener('change', pressPrice);
 
   timeInElement.addEventListener('change', function () {
     timeOutElement.value = timeInElement.value;
@@ -100,6 +110,10 @@
     disabledCapacity();
   };
 
+  const deactivateActivate = function () {
+    formElementTwo.classList.add('ad-form--disabled');
+  };
+
   const addressRecord = function (X, Y) {
     addressElement.value = ' X ' + X + ' , Y ' + (Y + 10);
 
@@ -110,14 +124,13 @@
   formElementTwo.addEventListener('submit', function (evt) {
     evt.preventDefault();
     evt.stopPropagation();
-    window.upload(new FormData(formElementTwo), function () {
-      // window.upload(onSuccess, onError);
-      formElementTwo.reset();
-    });
+    window.upload(new FormData(formElementTwo), onSuccess, onError);
   });
 
   const onSuccess = function (res) {
     window.message.submittedForm(res);
+    window.main.deactivateActivatePage();
+    formElementTwo.reset();
   };
 
   const onError = function (res) {
@@ -126,30 +139,18 @@
 
   onClear.addEventListener('click', function (evt) {
     evt.preventDefault();
-    formElementOne.reset();
+    startPrice();
     formElementTwo.reset();
-    mainPinStart();
+    window.map.disabledFilters();
+    window.main.deactivateActivatePage();
   });
 
-  let mainPin = document.querySelector('.map__pin--main');
-
-  const mainPinStart = function () {
-    // let pinX = mainPin.style.left;
-    // let pinY = mainPin.style.top;
-
-    let pinX = '570px';
-    let pinY = '375px';
-
-    mainPin.style.left = pinX;
-    mainPin.style.top = pinY;
-
-    addressElement.value = ' X 570 , Y 375';
-
-  };
 
   window.form = {
     disabled: disabledCapacity,
     activate: activate,
-    address: addressRecord
+    deactivateActivate: deactivateActivate,
+    address: addressRecord,
+    startPrice: startPrice
   };
 })();

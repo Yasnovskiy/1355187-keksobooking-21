@@ -4,6 +4,7 @@
   let templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
   let similarListmMapPins = document.querySelector('.map__pins');
   let fragment = document.createDocumentFragment();
+  let mapElement = document.querySelector('.map');
 
   const createTemplatePin = function (obj) {
     const pin = templatePin.cloneNode(true);
@@ -26,8 +27,13 @@
     similarListmMapPins.appendChild(fragment);
   };
 
+  const removePins = function () {
+
+  };
+
   window.pin = {
-    render: renderPins
+    render: renderPins,
+    removePins: removePins
   };
 
 })();

@@ -28,25 +28,6 @@
     main.appendChild(success);
   };
 
-  // const notSubmittedForm = function (errorMessage) {
-  //   let error = templateError.cloneNode(true);
-  //   error.querySelector('.error__message').textContent = errorMessage;
-  //   error.addEventListener('click', function () {
-  //     closeError();
-  //   });
-
-  //   document.addEventListener('keydown', onDocumentKeydown);
-
-  //   main.appendChild(error);
-  // };
-
-  const onDocumentKeydown = function (evt) {
-    if (evt.key === 'Escape') {
-      closeError();
-      // closeSuccess();
-    }
-  };
-
   const closeError = function () {
     let error = main.querySelector('.error');
     if (error) {
@@ -60,6 +41,13 @@
     if (success) {
       success.remove();
       document.removeEventListener('keydown', onDocumentKeydown);
+    }
+  };
+
+  const onDocumentKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      closeError();
+      closeSuccess();
     }
   };
 
