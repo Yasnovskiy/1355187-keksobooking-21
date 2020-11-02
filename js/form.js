@@ -54,11 +54,6 @@
     priceElement.minValue = newValue;
   };
 
-  const startPrice = function () {
-    priceElement.min = 1000;
-    priceElement.placeholder = 1000;
-  };
-
   typeElement.addEventListener('change', pressPrice);
 
   timeInElement.addEventListener('change', function () {
@@ -139,8 +134,8 @@
 
   onClear.addEventListener('click', function (evt) {
     evt.preventDefault();
-    startPrice();
     formElementTwo.reset();
+    pressPrice();
     window.map.disabledFilters();
     window.main.deactivateActivatePage();
   });
@@ -150,7 +145,6 @@
     disabled: disabledCapacity,
     activate: activate,
     deactivateActivate: deactivateActivate,
-    address: addressRecord,
-    startPrice: startPrice
+    address: addressRecord
   };
 })();

@@ -40,7 +40,6 @@
 
   const deactivateActivatePage = function () {
     window.form.deactivateActivate();
-    window.form.startPrice();
     window.map.deactivateActivate();
     window.map.getdatapin();
     window.pin.removePins();

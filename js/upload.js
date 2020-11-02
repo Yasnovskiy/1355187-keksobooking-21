@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   const URL = 'https://21.javascript.pages.academy/keksobooking';
   const TIMEOUT_IN_MS = 10000;
 
@@ -51,5 +50,4 @@
     xhr.open('POST', URL);
     xhr.send(data);
   };
-
 })();
