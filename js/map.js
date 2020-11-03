@@ -104,14 +104,14 @@
     mapElement.classList.remove('map--faded');
   };
 
-  const deactivateActivate = function () {
+  const deactivate = function () {
     mainPinStart();
     mapElement.classList.add('map--faded');
   };
 
   window.map = {
     activate: activate,
-    deactivateActivate: deactivateActivate,
+    deactivate: deactivate,
     getdatapin: getDataPin,
     disabledFilters: disabledFilters
   };

@@ -17,7 +17,7 @@
     main.appendChild(error);
   };
 
-  const submittedForm = function () {
+  const showSuccess = function () {
     let success = templetSuccess.cloneNode(true);
     success.addEventListener('click', function () {
       closeSuccess();
@@ -53,6 +53,6 @@
 
   window.message = {
     showError: showError,
-    submittedForm: submittedForm
+    showSuccess: showSuccess
   };
 })();

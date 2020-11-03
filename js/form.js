@@ -105,8 +105,10 @@
     disabledCapacity();
   };
 
-  const deactivateActivate = function () {
+  const deactivate = function () {
     formElement.classList.add('ad-form--disabled');
+    formElement.reset();
+    pressPrice();
   };
 
   const addressRecord = function (X, Y) {
@@ -118,15 +120,12 @@
 
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    evt.stopPropagation();
     window.upload(new FormData(formElement), onSuccess, onError);
   });
 
   const onSuccess = function (res) {
-    window.message.submittedForm(res);
-    window.main.deactivateActivatePage();
-    pressPrice();
-    formElement.reset();
+    window.message.showSuccess(res);
+    window.main.deactivatePage();
   };
 
   const onError = function (res) {
@@ -135,17 +134,15 @@
 
   onClear.addEventListener('click', function (evt) {
     evt.preventDefault();
-    formElement.reset();
-    pressPrice();
-    window.map.disabledFilters();
-    window.main.deactivateActivatePage();
+    window.main.deactivatePage();
   });
 
 
   window.form = {
     disabled: disabledCapacity,
     activate: activate,
-    deactivateActivate: deactivateActivate,
-    address: addressRecord
+    deactivate: deactivate,
+    address: addressRecord,
+    pressPrice: pressPrice
   };
 })();

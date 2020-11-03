@@ -38,10 +38,9 @@
     }
   };
 
-  const deactivateActivatePage = function () {
-    window.form.deactivateActivate();
-    window.map.deactivateActivate();
-    window.map.getdatapin();
+  const deactivatePage = function () {
+    window.form.deactivate();
+    window.map.deactivate();
     window.pin.removePins();
     window.card.closeCard();
     formOff();
@@ -61,6 +60,6 @@
     on: formOn,
     off: formOff,
     activatePage: activatePage,
-    deactivateActivatePage: deactivateActivatePage
+    deactivatePage: deactivatePage
   };
 })();
