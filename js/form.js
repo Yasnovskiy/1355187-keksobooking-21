@@ -13,6 +13,7 @@
   let addressElement = document.querySelector('[name="address"]');
   let formElement = document.querySelector('.ad-form');
   let typeText = document.querySelector('input[type="text"]');
+  let onClear = document.querySelector('.ad-form__reset');
 
   typeText.addEventListener('input', function () {
     let valueLength = typeText.value.length;
@@ -28,26 +29,32 @@
     typeText.reportValidity();
   });
 
-  typeElement.addEventListener('change', function () {
+  const pressPrice = function () {
     let newValue = 0;
     switch (typeElement.value) {
       case 'bungalow':
         newValue = 0;
+        priceElement.setAttribute('min', newValue);
         break;
       case 'flat':
         newValue = 1000;
+        priceElement.setAttribute('min', newValue);
         break;
       case 'house':
         newValue = 5000;
+        priceElement.setAttribute('min', newValue);
         break;
       case 'palace':
         newValue = 10000;
+        priceElement.setAttribute('min', newValue);
         break;
     }
 
     priceElement.placeholder = newValue;
     priceElement.minValue = newValue;
-  });
+  };
+
+  typeElement.addEventListener('change', pressPrice);
 
   timeInElement.addEventListener('change', function () {
     timeOutElement.value = timeInElement.value;
@@ -98,15 +105,44 @@
     disabledCapacity();
   };
 
+  const deactivate = function () {
+    formElement.classList.add('ad-form--disabled');
+    formElement.reset();
+    pressPrice();
+  };
+
   const addressRecord = function (X, Y) {
     addressElement.value = ' X ' + X + ' , Y ' + (Y + 10);
 
     return addressElement;
   };
 
+
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.upload(new FormData(formElement), onSuccess, onError);
+  });
+
+  const onSuccess = function (res) {
+    window.message.showSuccess(res);
+    window.main.deactivatePage();
+  };
+
+  const onError = function (res) {
+    window.message.showError(res);
+  };
+
+  onClear.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.main.deactivatePage();
+  });
+
+
   window.form = {
     disabled: disabledCapacity,
     activate: activate,
-    address: addressRecord
+    deactivate: deactivate,
+    address: addressRecord,
+    pressPrice: pressPrice
   };
 })();

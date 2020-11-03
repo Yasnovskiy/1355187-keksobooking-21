@@ -38,8 +38,16 @@
     }
   };
 
+  const deactivatePage = function () {
+    window.form.deactivate();
+    window.map.deactivate();
+    window.pin.removePins();
+    window.card.closeCard();
+    formOff();
+  };
+
   const onSuccess = function (res) {
-    window.pin.render(res);
+    window.pin.render(res.slice(0, 8));
   };
 
   const onError = function (res) {
@@ -51,6 +59,7 @@
   window.main = {
     on: formOn,
     off: formOff,
-    activatePage: activatePage
+    activatePage: activatePage,
+    deactivatePage: deactivatePage
   };
 })();

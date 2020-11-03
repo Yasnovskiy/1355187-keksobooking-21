@@ -4,7 +4,6 @@
   let templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
   let similarListmMapPins = document.querySelector('.map__pins');
   let fragment = document.createDocumentFragment();
-  let MAX_SIMILAR_WIZARD_COUNT = 8;
 
   const createTemplatePin = function (obj) {
     const pin = templatePin.cloneNode(true);
@@ -20,15 +19,22 @@
   };
 
   const renderPins = function (arr) {
-    for (let i = 0; i < MAX_SIMILAR_WIZARD_COUNT; i++) {
+    for (let i = 0; i < arr.length; i++) {
       const pin = createTemplatePin(arr[i]);
       fragment.appendChild(pin);
     }
     similarListmMapPins.appendChild(fragment);
   };
 
-  window.pin = {
-    render: renderPins
+  const removePins = function () {
+    let list = similarListmMapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+    list.forEach((el) => {
+      el.remove();
+    });
   };
 
+  window.pin = {
+    render: renderPins,
+    removePins: removePins
+  };
 })();

@@ -2,6 +2,7 @@
 
 (function () {
   let templateError = document.querySelector('#error').content.querySelector('.error');
+  let templetSuccess = document.querySelector('#success').content.querySelector('.success');
   let main = document.querySelector('main');
 
   const showError = function (errorMessage) {
@@ -16,10 +17,15 @@
     main.appendChild(error);
   };
 
-  const onDocumentKeydown = function (evt) {
-    if (evt.key === 'Escape') {
-      closeError();
-    }
+  const showSuccess = function () {
+    let success = templetSuccess.cloneNode(true);
+    success.addEventListener('click', function () {
+      closeSuccess();
+    });
+
+    document.addEventListener('keydown', onDocumentKeydown);
+
+    main.appendChild(success);
   };
 
   const closeError = function () {
@@ -30,8 +36,23 @@
     }
   };
 
+  const closeSuccess = function () {
+    let success = main.querySelector('.success');
+    if (success) {
+      success.remove();
+      document.removeEventListener('keydown', onDocumentKeydown);
+    }
+  };
+
+  const onDocumentKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      closeError();
+      closeSuccess();
+    }
+  };
+
   window.message = {
     showError: showError,
-    closeError: closeError
+    showSuccess: showSuccess
   };
 })();
