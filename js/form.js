@@ -11,7 +11,7 @@
   let capacityElement = document.querySelector('[name="capacity"]');
   let capacityElementOption = capacityElement.querySelectorAll('option');
   let addressElement = document.querySelector('[name="address"]');
-  let formElementTwo = document.querySelector('.ad-form');
+  let formElement = document.querySelector('.ad-form');
   let typeText = document.querySelector('input[type="text"]');
   let onClear = document.querySelector('.ad-form__reset');
 
@@ -101,12 +101,12 @@
   });
 
   const activate = function () {
-    formElementTwo.classList.remove('ad-form--disabled');
+    formElement.classList.remove('ad-form--disabled');
     disabledCapacity();
   };
 
   const deactivateActivate = function () {
-    formElementTwo.classList.add('ad-form--disabled');
+    formElement.classList.add('ad-form--disabled');
   };
 
   const addressRecord = function (X, Y) {
@@ -116,16 +116,17 @@
   };
 
 
-  formElementTwo.addEventListener('submit', function (evt) {
+  formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
     evt.stopPropagation();
-    window.upload(new FormData(formElementTwo), onSuccess, onError);
+    window.upload(new FormData(formElement), onSuccess, onError);
   });
 
   const onSuccess = function (res) {
     window.message.submittedForm(res);
     window.main.deactivateActivatePage();
-    formElementTwo.reset();
+    pressPrice();
+    formElement.reset();
   };
 
   const onError = function (res) {
@@ -134,7 +135,7 @@
 
   onClear.addEventListener('click', function (evt) {
     evt.preventDefault();
-    formElementTwo.reset();
+    formElement.reset();
     pressPrice();
     window.map.disabledFilters();
     window.main.deactivateActivatePage();
