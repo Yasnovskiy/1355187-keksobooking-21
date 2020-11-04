@@ -46,12 +46,12 @@
     formOff();
   };
 
-  const onSuccess = function (res) {
-    window.pin.render(res.slice(0, 8));
+  const onSuccess = function (data) {
+    window.pin.render(data.slice(0, 5));
   };
 
-  const onError = function (res) {
-    window.message.showError(res);
+  const onError = function (data) {
+    window.message.showError(data);
   };
 
   formOff();

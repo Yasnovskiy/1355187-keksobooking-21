@@ -89,14 +89,29 @@
   roomsElement.addEventListener('change', function () {
     disabledCapacity();
 
-    if (roomsElement.value === '1') {
-      capacityElement.value = '1';
-    } else if (roomsElement.value === '2') {
-      capacityElement.value = '2';
-    } else if (roomsElement.value === '3') {
-      capacityElement.value = '3';
-    } else if (roomsElement.value === '100') {
-      capacityElement.value = '0';
+    // if (roomsElement.value === '1') {
+    //   capacityElement.value = '1';
+    // } else if (roomsElement.value === '2') {
+    //   capacityElement.value = '2';
+    // } else if (roomsElement.value === '3') {
+    //   capacityElement.value = '3';
+    // } else if (roomsElement.value === '100') {
+    //   capacityElement.value = '0';
+    // }
+
+    switch (roomsElement.value) {
+      case '1':
+        capacityElement.value = '1'
+        break;
+      case '2':
+        capacityElement.value = '2';
+        break;
+      case '3':
+        capacityElement.value = '3';
+        break;
+      case '100':
+        capacityElement.value = '0';
+        break;
     }
   });
 
