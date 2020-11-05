@@ -1,44 +1,93 @@
 'use strict';
 
 (function () {
-  let coatColor = 'flat';
-  let typeArray = [];
-
-
   const formFilters = document.querySelector('.map__filters');
-
-  const updateWizards = function () {
-
-    const sameCoatWizards = typeArray.filter(function (type) {
-      return type.colorCoat === coatColor;
-    });
-
-    // const sameEyesWizards = typeArray.filter(function (type) {
-    //   return type.colorEyes === eyesColor;
-    // });
-
-    window.pin.render(sameCoatWizards);
-    // window.pin.render(data.slice(0, 5));
-  };
-
   const formTypeFilter = formFilters.querySelector('#housing-type');
 
-  formTypeFilter.addEventListener('change', function () {
-    const type = formTypeFilter.value;
+  const applyFilter = function (data) {
+    const filtered = data.filter(function (item) {
+      return (formTypeFilter.value === 'any') || (item.offer.type === formTypeFilter.value);
+    });
 
-    console.log(type);
+    return filtered;
+  };
+
+  let filter = {
+    onTypeValue: function (type) {}
+  };
+
+  formTypeFilter.addEventListener('change', function () {
+    const newColor = applyFilter();
+    filter.onCoatChange(newColor);
   });
 
+  window.filter = {
+    apply: applyFilter,
 
-  const onSuccess = function (res) {
-    typeArray = res;
-    // window.pin.render(typeArray.slice(0, 5));
-    updateWizards();
+    setEyesChangeHandler: function (cb) {
+      filter.onTypeValue = cb;
+    }
   };
 
-  const onError = function (data) {
-    window.message.showError(data);
-  };
+  // formTypeFilter.addEventListener('change', function () {
+  //   window.pin.filterPins();
+  // });
 
-  window.load(onSuccess, onError);
+  // window.filter = {
+  //   apply: applyFilter
+  // };
 })();
+
+// (function () {
+//   const COAT_COLORS = [
+//     'rgb(146, 100, 161)',
+//     'rgb(215, 210, 55)',
+//     'rgb(241, 43, 107)',
+//     'rgb(101, 137, 164)',
+//     'rgb(0, 0, 0)',
+//     'rgb(215, 210, 55)',
+//     'rgb(56, 159, 117)',
+//     'rgb(241, 43, 107)'
+//   ];
+
+//   const EYES_COLORS = [
+//     'red',
+//     'orange',
+//     'yellow',
+//     'green',
+//     'lightblue',
+//     'blue',
+//     'purple'
+//   ];
+
+//   let wizard = {
+//     onEyesChange: function (color) {},
+//     onCoatChange: function (color) {}
+//   };
+
+//   const wizardElement = document.querySelector('.setup-wizard');
+
+//   const wizardCoatElement = wizardElement.querySelector('.wizard-coat');
+//   wizardCoatElement.addEventListener('click', function () {
+//     const newColor = window.utils.getRandomElement(COAT_COLORS);
+//     this.style.fill = newColor;
+//     wizard.onCoatChange(newColor);
+//   });
+
+//   const wizardEyesElement = wizardElement.querySelector('.wizard-eyes');
+//   wizardEyesElement.addEventListener('click', function () {
+//     const newColor = window.utils.getRandomElement(EYES_COLORS);
+//     this.style.fill = newColor;
+//     wizard.onEyesChange(newColor);
+//   });
+
+//   window.wizard = {
+//     setCoatChangeHandler: function (cb) {
+//       wizard.onCoatChange = cb;
+//     },
+
+//     setEyesChangeHandler: function (cb) {
+//       wizard.onEyesChange = cb;
+//     }
+//   }
+// })();

@@ -101,7 +101,7 @@
 
     switch (roomsElement.value) {
       case '1':
-        capacityElement.value = '1'
+        capacityElement.value = '1';
         break;
       case '2':
         capacityElement.value = '2';

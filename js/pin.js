@@ -26,6 +26,13 @@
     similarListmMapPins.appendChild(fragment);
   };
 
+  // const filterPins = function () {
+  //   removePins();
+  //   // window.filters.apply();
+  //   const filteredData = window.filter.apply();
+  //   renderPins(filteredData);
+  // };
+
   const removePins = function () {
     let list = similarListmMapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
     list.forEach((el) => {
@@ -36,5 +43,6 @@
   window.pin = {
     render: renderPins,
     removePins: removePins
+    // filterPins: filterPins
   };
 })();

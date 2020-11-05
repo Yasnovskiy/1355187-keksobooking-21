@@ -46,13 +46,43 @@
     formOff();
   };
 
+  let eyesColor = 'any';
+  let wizards = [];
+
+  // window.filter.setEyesChangeHandler(function (type) {
+  //   eyesColor = type;
+  // });
+
   const onSuccess = function (data) {
-    window.pin.render(data.slice(0, 5));
+    // wizards = data;
+    const filteredData = window.filter.apply(data.slice(0, 5));
+    window.pin.render(filteredData);
+
+    // window.pin.render(data.slice(0, 5));
   };
 
   const onError = function (data) {
     window.message.showError(data);
   };
+
+  // const formFilters = document.querySelector('.map__filters');
+  // const formTypeFilter = formFilters.querySelector('#housing-type');
+
+  // formTypeFilter.addEventListener('change', function () {
+  //   const leput = formTypeFilter.value;
+
+  //   //удаляет пины (все кроме главного)
+  //   window.pin.removePins();
+  //   //думал получится как в main (показал как было в main)
+  //   // const filteredData = window.filter.apply(data.slice(0, 5));
+  //   // window.pin.render(filteredData);
+  //   const pin = window.filter.apply(leput);
+  //   window.pin.render(pin);
+
+  //   //но ошибку выдает и пишет, что (const filtered = data.filter(function (item) {
+  //   //   return (formTypeFilter.value === 'any') || (item.offer.type === formTypeFilter.value);
+  //   // }); ) не функция
+  // });
 
   formOff();
 
