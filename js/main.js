@@ -46,25 +46,26 @@
     formOff();
   };
 
-  // let adsData = [];
-
+  let asData = [];
   const onSuccess = function (data) {
-    window.map.rerenderPins(data);
+    asData = data;
+    window.filter.renderPins();
+    // rerenderPins();
   };
 
-   // const filteredData = window.filter.apply(data.slice(0, 5));
-    // window.pin.render(filteredData);
-    // window.map.rerenderPins(data);
-    // window.pin.render(data.slice(0, 5));
-    // adsData = data;
-
   // const rerenderPins = function () {
-  //   // adsData = data;
-  //   const filteredData = window.filter.apply(adsData);
   //   window.card.closeCard();
   //   window.pin.removePins();
+  //   const filteredData = window.filter.apply(asData);
   //   window.pin.render(filteredData.slice(0, 5));
   // };
+
+  const rerenderPins = function () {
+    window.card.closeCard();
+    window.pin.removePins();
+    const filteredData = window.filter.apply(asData);
+    window.pin.render(filteredData.slice(0, 5));
+  };
 
   const onError = function (data) {
     window.message.showError(data);
@@ -77,6 +78,6 @@
     off: formOff,
     activatePage: activatePage,
     deactivatePage: deactivatePage,
-    // rerenderPins: rerenderPins
+    rerenderPins: rerenderPins
   };
 })();

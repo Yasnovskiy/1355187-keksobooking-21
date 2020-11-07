@@ -109,20 +109,10 @@
     mapElement.classList.add('map--faded');
   };
 
-  let data = [];
-  const rerenderPins = function (arr) {
-    data = arr;
-    window.card.closeCard();
-    window.pin.removePins();
-    const filteredData = window.filter.apply(data);
-    window.pin.render(filteredData.slice(0, 5));
-  };
-
   window.map = {
     activate: activate,
     deactivate: deactivate,
     getdatapin: getDataPin,
-    disabledFilters: disabledFilters,
-    rerenderPins: rerenderPins
+    disabledFilters: disabledFilters
   };
 })();

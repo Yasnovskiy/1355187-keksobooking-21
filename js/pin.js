@@ -36,6 +36,5 @@
   window.pin = {
     render: renderPins,
     removePins: removePins
-    // filterPins: filterPins
   };
 })();
