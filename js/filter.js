@@ -7,43 +7,66 @@
   const formRoomsFilter = formFilters.querySelector('#housing-rooms');
   const formGuestsFilter = formFilters.querySelector('#housing-guests');
 
+  const transformation = function (string) {
+    let valo = '';
+    valo = Number(string);
+
+    return valo;
+  };
+
+  const checkType = function (item) {
+    return (formTypeFilter.value === 'any') || (item.offer.type === formTypeFilter.value);
+  };
+
+  const checkPrice = function (item) {
+    let price = true;
+    if (formPriceFilter.value === 'any') {
+      price = price;
+    } else if (formPriceFilter.value === 'middle') {
+      price = item.offer.price > 10000 && item.offer.price < 50000;
+    } else if (formPriceFilter.value === 'low') {
+      price = item.offer.price <= 10000;
+    } else if (formPriceFilter.value === 'high') {
+      price = item.offer.price >= 50000;
+    }
+
+    return price;
+  };
+
+  const checkRooms = function (item) {
+    return (formRoomsFilter.value === 'any') || (item.offer.rooms === transformation(formRoomsFilter.value));
+  };
+
+  const checkGuests = function (item) {
+    return (formGuestsFilter.value === 'any') || (item.offer.guests === transformation(formGuestsFilter.value));
+  };
+
+  const checkByFeatures = function (item, checked) {
+    return checked.every(function (el) {
+      return item.offer.features.includes(el.value);
+    });
+  };
+
   const applyFilter = function (data) {
+    const checked = formFilters.querySelectorAll('.map__checkbox:checked');
+    const checkedArr = Array.from(checked);
+
     const filtered = data.filter(function (item) {
-      (formTypeFilter.value === 'any') || (item.offer.type === formTypeFilter.value);
-      (formPriceFilter.value === 'any') || (item.offer.price === formPriceFilter.value);
-      (formRoomsFilter.value === 'any') || (item.offer.rooms === formRoomsFilter.value);
-      return (formGuestsFilter.value === 'any') || (item.offer.guests === formGuestsFilter.value);
+      return checkType(item) &&
+        checkByFeatures(item, checkedArr) &&
+        checkRooms(item) &&
+        checkGuests(item) &&
+        checkPrice(item);
     });
 
     return filtered;
   };
 
-  let data = [];
-  const renderPins = function (arr) {
-    data = arr;
-    window.main.rerenderPins(data);
-  };
-
   formFilters.addEventListener('change', function () {
-    window.main.rerenderPins();
+    window.map.rerenderPins();
   });
 
-  // const rerenderPins = function () {
-  //   window.card.closeCard();
-  //   window.pin.removePins();
-  //   const filteredData = window.filter.apply(data);
-  //   window.pin.render(filteredData.slice(0, 5));
-  // };
-
-  // const rerenderPins = function () {
-  //   window.card.closeCard();
-  //   window.pin.removePins();
-  //   const filteredData = window.filter.apply(data);
-  //   window.pin.render(filteredData.slice(0, 5));
-  // };
-
   window.filter = {
-    apply: applyFilter,
-    renderPins: renderPins
+    apply: applyFilter
   };
 })();

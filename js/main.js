@@ -1,8 +1,8 @@
 'use strict';
 (function () {
-  let field = document.querySelectorAll('fieldset');
-  let mapEr = document.querySelector('.map__filters');
-  let child = mapEr.querySelectorAll('.map__filter');
+  const field = document.querySelectorAll('fieldset');
+  const mapEr = document.querySelector('.map__filters');
+  const child = mapEr.querySelectorAll('.map__filter');
 
   const formOn = function () {
     for (let i = 0; i < field.length; i++) {
@@ -46,25 +46,9 @@
     formOff();
   };
 
-  let asData = [];
   const onSuccess = function (data) {
-    asData = data;
-    window.filter.renderPins();
-    // rerenderPins();
-  };
-
-  // const rerenderPins = function () {
-  //   window.card.closeCard();
-  //   window.pin.removePins();
-  //   const filteredData = window.filter.apply(asData);
-  //   window.pin.render(filteredData.slice(0, 5));
-  // };
-
-  const rerenderPins = function () {
-    window.card.closeCard();
-    window.pin.removePins();
-    const filteredData = window.filter.apply(asData);
-    window.pin.render(filteredData.slice(0, 5));
+    window.map.setData(data);
+    window.map.rerenderPins();
   };
 
   const onError = function (data) {
@@ -78,6 +62,5 @@
     off: formOff,
     activatePage: activatePage,
     deactivatePage: deactivatePage,
-    rerenderPins: rerenderPins
   };
 })();

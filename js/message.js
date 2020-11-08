@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  let templateError = document.querySelector('#error').content.querySelector('.error');
-  let templetSuccess = document.querySelector('#success').content.querySelector('.success');
-  let main = document.querySelector('main');
+  const templateError = document.querySelector('#error').content.querySelector('.error');
+  const templetSuccess = document.querySelector('#success').content.querySelector('.success');
+  const main = document.querySelector('main');
 
   const showError = function (errorMessage) {
     let error = templateError.cloneNode(true);

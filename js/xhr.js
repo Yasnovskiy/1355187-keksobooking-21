@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   const createXhr = function (onSuccess, onError) {
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
