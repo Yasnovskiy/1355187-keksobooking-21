@@ -1,8 +1,8 @@
 'use strict';
 (function () {
-  let field = document.querySelectorAll('fieldset');
-  let mapEr = document.querySelector('.map__filters');
-  let child = mapEr.querySelectorAll('.map__filter');
+  const field = document.querySelectorAll('fieldset');
+  const mapEr = document.querySelector('.map__filters');
+  const child = mapEr.querySelectorAll('.map__filter');
 
   const formOn = function () {
     for (let i = 0; i < field.length; i++) {
@@ -46,12 +46,13 @@
     formOff();
   };
 
-  const onSuccess = function (res) {
-    window.pin.render(res.slice(0, 8));
+  const onSuccess = function (data) {
+    window.map.setData(data);
+    window.map.rerenderPins();
   };
 
-  const onError = function (res) {
-    window.message.showError(res);
+  const onError = function (data) {
+    window.message.showError(data);
   };
 
   formOff();
@@ -60,6 +61,6 @@
     on: formOn,
     off: formOff,
     activatePage: activatePage,
-    deactivatePage: deactivatePage
+    deactivatePage: deactivatePage,
   };
 })();

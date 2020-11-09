@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  let mapElement = document.querySelector('.map');
-  let formElement = document.querySelector('.map__filters');
-  let mainPins = document.querySelector('.map__pin--main');
-  let addressElement = document.querySelector('[name="address"]');
+  const mapElement = document.querySelector('.map');
+  const formElement = document.querySelector('.map__filters');
+  const mainPins = document.querySelector('.map__pin--main');
+  const addressElement = document.querySelector('[name="address"]');
 
   mainPins.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
@@ -93,7 +93,6 @@
     mainPins.style.top = pinY;
 
     addressElement.value = ' X 570 , Y 375';
-
   };
 
   const disabledFilters = function () {
@@ -109,10 +108,24 @@
     mapElement.classList.add('map--faded');
   };
 
+  let dataAds = [];
+  const setData = function (data) {
+    dataAds = data;
+  };
+
+  const rerenderPins = function () {
+    window.card.closeCard();
+    window.pin.removePins();
+    const filteredData = window.filter.apply(dataAds);
+    window.pin.render(filteredData.slice(0, 5));
+  };
+
   window.map = {
     activate: activate,
     deactivate: deactivate,
     getdatapin: getDataPin,
-    disabledFilters: disabledFilters
+    disabledFilters: disabledFilters,
+    setData: setData,
+    rerenderPins: rerenderPins
   };
 })();

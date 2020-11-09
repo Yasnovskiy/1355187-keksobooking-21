@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  let templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
-  let similarListmMapPins = document.querySelector('.map__pins');
-  let fragment = document.createDocumentFragment();
+  const templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
+  const similarListmMapPins = document.querySelector('.map__pins');
+  const fragment = document.createDocumentFragment();
 
   const createTemplatePin = function (obj) {
     const pin = templatePin.cloneNode(true);

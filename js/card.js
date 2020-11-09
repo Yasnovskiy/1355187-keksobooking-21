@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  let templateCards = document.querySelector('#card').content.querySelector('.map__card');
-  let templatePhoto = templateCards.querySelector('.popup__photo');
-  let filtersElement = document.querySelector('.map__filters-container');
-  let mapElement = document.querySelector('.map');
+  const templateCards = document.querySelector('#card').content.querySelector('.map__card');
+  const templatePhoto = templateCards.querySelector('.popup__photo');
+  const filtersElement = document.querySelector('.map__filters-container');
+  const mapElement = document.querySelector('.map');
 
   const createTemplateCards = function (obj) {
     const card = templateCards.cloneNode(true);

@@ -3,17 +3,17 @@
 (function () {
   const MIN_NAME_LENGTH = 30;
   const MAX_NAME_LENGTH = 100;
-  let typeElement = document.querySelector('[name="type"]');
-  let priceElement = document.querySelector('[name="price"]');
-  let timeInElement = document.querySelector('#timein');
-  let timeOutElement = document.querySelector('#timeout');
-  let roomsElement = document.querySelector('[name="rooms"]');
-  let capacityElement = document.querySelector('[name="capacity"]');
-  let capacityElementOption = capacityElement.querySelectorAll('option');
-  let addressElement = document.querySelector('[name="address"]');
-  let formElement = document.querySelector('.ad-form');
-  let typeText = document.querySelector('input[type="text"]');
-  let onClear = document.querySelector('.ad-form__reset');
+  const typeElement = document.querySelector('[name="type"]');
+  const priceElement = document.querySelector('[name="price"]');
+  const timeInElement = document.querySelector('#timein');
+  const timeOutElement = document.querySelector('#timeout');
+  const roomsElement = document.querySelector('[name="rooms"]');
+  const capacityElement = document.querySelector('[name="capacity"]');
+  const capacityElementOption = capacityElement.querySelectorAll('option');
+  const addressElement = document.querySelector('[name="address"]');
+  const formElement = document.querySelector('.ad-form');
+  const typeText = document.querySelector('input[type="text"]');
+  const onClear = document.querySelector('.ad-form__reset');
 
   typeText.addEventListener('input', function () {
     let valueLength = typeText.value.length;
@@ -88,15 +88,19 @@
 
   roomsElement.addEventListener('change', function () {
     disabledCapacity();
-
-    if (roomsElement.value === '1') {
-      capacityElement.value = '1';
-    } else if (roomsElement.value === '2') {
-      capacityElement.value = '2';
-    } else if (roomsElement.value === '3') {
-      capacityElement.value = '3';
-    } else if (roomsElement.value === '100') {
-      capacityElement.value = '0';
+    switch (roomsElement.value) {
+      case '1':
+        capacityElement.value = '1';
+        break;
+      case '2':
+        capacityElement.value = '2';
+        break;
+      case '3':
+        capacityElement.value = '3';
+        break;
+      case '100':
+        capacityElement.value = '0';
+        break;
     }
   });
 
