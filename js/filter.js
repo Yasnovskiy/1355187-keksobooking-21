@@ -7,13 +7,6 @@
   const formRoomsFilter = formFilters.querySelector('#housing-rooms');
   const formGuestsFilter = formFilters.querySelector('#housing-guests');
 
-  const transformation = function (string) {
-    let valo = '';
-    valo = Number(string);
-
-    return valo;
-  };
-
   const checkType = function (item) {
     return (formTypeFilter.value === 'any') || (item.offer.type === formTypeFilter.value);
   };
@@ -34,11 +27,26 @@
   };
 
   const checkRooms = function (item) {
-    return (formRoomsFilter.value === 'any') || (item.offer.rooms === transformation(formRoomsFilter.value));
+    return (formRoomsFilter.value === 'any') || (item.offer.rooms === Number.parseInt(formRoomsFilter.value, 10));
   };
 
+  // const checkGuests = function (item) {
+  //   return (formGuestsFilter.value === 'any') || (item.offer.guests === Number.parseInt(formGuestsFilter.value, 10));
+  // };
+
   const checkGuests = function (item) {
-    return (formGuestsFilter.value === 'any') || (item.offer.guests === transformation(formGuestsFilter.value));
+    let price = true;
+    if (formGuestsFilter.value === 'any') {
+      price = price;
+    } else if (formGuestsFilter.value === '2') {
+      price = item.offer.guests > 2;
+    } else if (formGuestsFilter.value === '1') {
+      price = item.offer.guests > 1;
+    } else if (formGuestsFilter.value === '0') {
+      price = item.offer.guests === 0;
+    }
+
+    return price;
   };
 
   const checkByFeatures = function (item, checked) {
@@ -62,9 +70,13 @@
     return filtered;
   };
 
-  formFilters.addEventListener('change', function () {
+  const onFilterChange = function () {
     window.map.rerenderPins();
-  });
+  };
+
+  const onFilterChangeDebounce = window.debounce(onFilterChange);
+
+  formFilters.addEventListener('change', onFilterChangeDebounce);
 
   window.filter = {
     apply: applyFilter
