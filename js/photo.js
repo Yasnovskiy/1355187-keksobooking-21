@@ -2,7 +2,6 @@
 
 (function () {
   const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-
   const fileChooser = document.querySelector('#images');
   const photoDiv = document.querySelector('.ad-form__photo');
 

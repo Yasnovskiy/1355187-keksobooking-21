@@ -113,7 +113,7 @@
     formElement.classList.add('ad-form--disabled');
     formElement.reset();
     window.photo.removePhoto();
-    window.avatar.returnBeginning();
+    window.avatar.resetBeginning();
     pressPrice();
   };
 
