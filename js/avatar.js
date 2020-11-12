@@ -2,7 +2,6 @@
 
 (function () {
   const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-
   const fileChooser = document.querySelector('#avatar');
   const avatarDiv = document.querySelector('.ad-form-header__preview');
   const preview = avatarDiv.querySelector('img');
@@ -26,11 +25,11 @@
     }
   });
 
-  const returnBeginning = function () {
+  const resetBeginning = function () {
     preview.src = 'img/muffin-grey.svg';
   };
 
   window.avatar = {
-    returnBeginning: returnBeginning
+    resetBeginning: resetBeginning
   };
 })();

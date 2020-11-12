@@ -30,10 +30,6 @@
     return (formRoomsFilter.value === 'any') || (item.offer.rooms === Number.parseInt(formRoomsFilter.value, 10));
   };
 
-  // const checkGuests = function (item) {
-  //   return (formGuestsFilter.value === 'any') || (item.offer.guests === Number.parseInt(formGuestsFilter.value, 10));
-  // };
-
   const checkGuests = function (item) {
     let price = true;
     if (formGuestsFilter.value === 'any') {
