@@ -3,22 +3,34 @@
 (function () {
   const mapElement = document.querySelector(`.map`);
   const formElement = document.querySelector(`.map__filters`);
-  const mainPins = document.querySelector(`.map__pin--main`);
+  const mainPin = document.querySelector(`.map__pin--main`);
   const addressElement = document.querySelector(`[name="address"]`);
 
-  mainPins.addEventListener(`mousedown`, function (evt) {
+  const getMainPinPosition = function () {
+    return {
+      x: mainPin.offsetLeft + mainPin.offsetWidth / 2,
+      y: mainPin.offsetTop + mainPin.offsetHeight
+    };
+  };
+
+  const setMainPinPosition = function (x, y) {
+    mainPin.style.top = (y - (mainPin.offsetWidth / 2)) + `px`;
+    mainPin.style.left = (x - mainPin.offsetHeight) + `px`;
+  };
+
+  mainPin.addEventListener(`mousedown`, function (evt) {
     if (evt.button === 0) {
       evt.preventDefault();
       window.main.activatePage();
     }
   });
 
-  mainPins.addEventListener(`click`, function (evt) {
+  mainPin.addEventListener(`click`, function (evt) {
     evt.preventDefault();
     window.main.activatePage();
   });
 
-  mainPins.addEventListener(`mousedown`, function (evt) {
+  mainPin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
 
     let startCoords = {
@@ -39,27 +51,31 @@
         y: moveEvt.clientY
       };
 
-      let nextY = mainPins.offsetTop - shift.y;
-      let nextX = mainPins.offsetLeft - shift.x;
+      const pinPosition = getMainPinPosition();
 
-      if (nextX < -30) {
-        nextX = -30;
+      let nextY = pinPosition.x - shift.y;
+      let nextX = pinPosition.y - shift.x;
+
+      if (nextX < 0) {
+        nextX = 0;
       }
 
-      if (nextX > 1165) {
-        nextX = 1165;
+      if (nextX > 1200) {
+        nextX = 1200;
       }
 
-      if (nextY < 100) {
-        nextY = 100;
+      if (nextY < 130) {
+        nextY = 130;
       }
 
-      if (nextY > 620) {
-        nextY = 620;
+      if (nextY > 630) {
+        nextY = 630;
       }
 
-      mainPins.style.top = nextY + `px`;
-      mainPins.style.left = nextX + `px`;
+      // mainPins.style.top = nextY + `px`;
+      // mainPins.style.left = nextX + `px`;
+
+      setMainPinPosition(nextX, nextY);
 
       window.form.address(nextX, nextY);
     };
@@ -78,8 +94,8 @@
 
   const getDataPin = function () {
     let dataPit = {
-      x: mainPins.offsetLeft,
-      y: mainPins.offsetTop
+      x: mainPin.offsetLeft,
+      y: mainPin.offsetTop
     };
 
     return dataPit;
@@ -89,10 +105,10 @@
     let pinX = `570px`;
     let pinY = `375px`;
 
-    mainPins.style.left = pinX;
-    mainPins.style.top = pinY;
+    mainPin.style.left = pinX;
+    mainPin.style.top = pinY;
 
-    addressElement.value = ` 613, 428`;
+    addressElement.value = ` 0, 0`;
   };
 
   const disabledFilters = function () {

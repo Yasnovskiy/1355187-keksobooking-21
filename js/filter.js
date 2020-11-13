@@ -2,10 +2,28 @@
 
 (function () {
   const formFilters = document.querySelector(`.map__filters`);
+  const formFieldset = formFilters.querySelector(`fieldset`);
+  const mapChild = formFilters.querySelectorAll(`.map__filter`);
   const formTypeFilter = formFilters.querySelector(`#housing-type`);
   const formPriceFilter = formFilters.querySelector(`#housing-price`);
   const formRoomsFilter = formFilters.querySelector(`#housing-rooms`);
   const formGuestsFilter = formFilters.querySelector(`#housing-guests`);
+
+  const offFilter = function () {
+    for (let i = 0; i < mapChild.length; i++) {
+      mapChild[i].setAttribute(`disabled`, `disabled`);
+    }
+
+    formFieldset.setAttribute(`disabled`, `disabled`);
+  };
+
+  const onFilter = function () {
+    for (let i = 0; i < mapChild.length; i++) {
+      mapChild[i].removeAttribute(`disabled`);
+    }
+
+    formFieldset.removeAttribute(`disabled`);
+  };
 
   const checkType = function (item) {
     return (formTypeFilter.value === `any`) || (item.offer.type === formTypeFilter.value);
@@ -80,6 +98,8 @@
 
   window.filter = {
     apply: applyFilter,
-    clearFilter: clearFilter
+    clearFilter: clearFilter,
+    onFilter: onFilter,
+    offFilter: offFilter
   };
 })();

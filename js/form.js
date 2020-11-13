@@ -14,6 +14,7 @@
   const formElement = document.querySelector(`.ad-form`);
   const typeText = document.querySelector(`input[type="text"]`);
   const onClear = document.querySelector(`.ad-form__reset`);
+  const field = formElement.querySelectorAll(`fieldset`);
 
   typeText.addEventListener(`input`, function () {
     let valueLength = typeText.value.length;
@@ -143,12 +144,26 @@
     window.main.deactivatePage();
   });
 
+  const formOff = function () {
+    for (let i = 0; i < field.length; i++) {
+      field[i].setAttribute(`disabled`, `disabled`);
+    }
+  };
+
+  const formOn = function () {
+    for (let i = 0; i < field.length; i++) {
+      field[i].removeAttribute(`disabled`);
+    }
+  };
+
 
   window.form = {
     disabled: disabledCapacity,
     activate: activate,
     deactivate: deactivate,
     address: addressRecord,
-    pressPrice: pressPrice
+    pressPrice: pressPrice,
+    formOff: formOff,
+    formOn: formOn
   };
 })();

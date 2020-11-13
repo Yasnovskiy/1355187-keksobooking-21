@@ -43,7 +43,10 @@
   };
 
   const removeActive = function () {
-
+    let list = similarListMapPins.querySelectorAll(`.map__pin`);
+    list.forEach((el) => {
+      el.classList.remove(`map__pin--active`);
+    });
   };
 
   // const removeClassActive = function () {
@@ -52,7 +55,8 @@
 
   window.pin = {
     render: renderPins,
-    removePins: removePins
+    removePins: removePins,
+    removeActive: removeActive
     // removeClassActive: removeClassActive
   };
 })();
