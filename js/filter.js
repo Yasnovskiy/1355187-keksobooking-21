@@ -1,25 +1,25 @@
 'use strict';
 
 (function () {
-  const formFilters = document.querySelector('.map__filters');
-  const formTypeFilter = formFilters.querySelector('#housing-type');
-  const formPriceFilter = formFilters.querySelector('#housing-price');
-  const formRoomsFilter = formFilters.querySelector('#housing-rooms');
-  const formGuestsFilter = formFilters.querySelector('#housing-guests');
+  const formFilters = document.querySelector(`.map__filters`);
+  const formTypeFilter = formFilters.querySelector(`#housing-type`);
+  const formPriceFilter = formFilters.querySelector(`#housing-price`);
+  const formRoomsFilter = formFilters.querySelector(`#housing-rooms`);
+  const formGuestsFilter = formFilters.querySelector(`#housing-guests`);
 
   const checkType = function (item) {
-    return (formTypeFilter.value === 'any') || (item.offer.type === formTypeFilter.value);
+    return (formTypeFilter.value === `any`) || (item.offer.type === formTypeFilter.value);
   };
 
   const checkPrice = function (item) {
     let price = true;
-    if (formPriceFilter.value === 'any') {
+    if (formPriceFilter.value === `any`) {
       price = price;
-    } else if (formPriceFilter.value === 'middle') {
+    } else if (formPriceFilter.value === `middle`) {
       price = item.offer.price > 10000 && item.offer.price < 50000;
-    } else if (formPriceFilter.value === 'low') {
+    } else if (formPriceFilter.value === `low`) {
       price = item.offer.price <= 10000;
-    } else if (formPriceFilter.value === 'high') {
+    } else if (formPriceFilter.value === `high`) {
       price = item.offer.price >= 50000;
     }
 
@@ -27,18 +27,18 @@
   };
 
   const checkRooms = function (item) {
-    return (formRoomsFilter.value === 'any') || (item.offer.rooms === Number.parseInt(formRoomsFilter.value, 10));
+    return (formRoomsFilter.value === `any`) || (item.offer.rooms === Number.parseInt(formRoomsFilter.value, 10));
   };
 
   const checkGuests = function (item) {
     let price = true;
-    if (formGuestsFilter.value === 'any') {
+    if (formGuestsFilter.value === `any`) {
       price = price;
-    } else if (formGuestsFilter.value === '2') {
+    } else if (formGuestsFilter.value === `2`) {
       price = item.offer.guests > 2;
-    } else if (formGuestsFilter.value === '1') {
+    } else if (formGuestsFilter.value === `1`) {
       price = item.offer.guests > 1;
-    } else if (formGuestsFilter.value === '0') {
+    } else if (formGuestsFilter.value === `0`) {
       price = item.offer.guests === 0;
     }
 
@@ -52,7 +52,7 @@
   };
 
   const applyFilter = function (data) {
-    const checked = formFilters.querySelectorAll('.map__checkbox:checked');
+    const checked = formFilters.querySelectorAll(`.map__checkbox:checked`);
     const checkedArr = Array.from(checked);
 
     const filtered = data.filter(function (item) {
@@ -72,9 +72,14 @@
 
   const onFilterChangeDebounce = window.debounce(onFilterChange);
 
-  formFilters.addEventListener('change', onFilterChangeDebounce);
+  formFilters.addEventListener(`change`, onFilterChangeDebounce);
+
+  const clearFilter = function () {
+    formFilters.reset();
+  };
 
   window.filter = {
-    apply: applyFilter
+    apply: applyFilter,
+    clearFilter: clearFilter
   };
 })();

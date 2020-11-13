@@ -1,24 +1,24 @@
 'use strict';
 
 (function () {
-  const mapElement = document.querySelector('.map');
-  const formElement = document.querySelector('.map__filters');
-  const mainPins = document.querySelector('.map__pin--main');
-  const addressElement = document.querySelector('[name="address"]');
+  const mapElement = document.querySelector(`.map`);
+  const formElement = document.querySelector(`.map__filters`);
+  const mainPins = document.querySelector(`.map__pin--main`);
+  const addressElement = document.querySelector(`[name="address"]`);
 
-  mainPins.addEventListener('mousedown', function (evt) {
+  mainPins.addEventListener(`mousedown`, function (evt) {
     if (evt.button === 0) {
       evt.preventDefault();
       window.main.activatePage();
     }
   });
 
-  mainPins.addEventListener('click', function (evt) {
+  mainPins.addEventListener(`click`, function (evt) {
     evt.preventDefault();
     window.main.activatePage();
   });
 
-  mainPins.addEventListener('mousedown', function (evt) {
+  mainPins.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
 
     let startCoords = {
@@ -42,24 +42,24 @@
       let nextY = mainPins.offsetTop - shift.y;
       let nextX = mainPins.offsetLeft - shift.x;
 
-      if (nextX < 0) {
-        nextX = 0;
+      if (nextX < -30) {
+        nextX = -30;
       }
 
-      if (nextX > 1135) {
-        nextX = 1135;
+      if (nextX > 1165) {
+        nextX = 1165;
       }
 
-      if (nextY < 120) {
-        nextY = 120;
+      if (nextY < 100) {
+        nextY = 100;
       }
 
       if (nextY > 620) {
         nextY = 620;
       }
 
-      mainPins.style.top = nextY + 'px';
-      mainPins.style.left = nextX + 'px';
+      mainPins.style.top = nextY + `px`;
+      mainPins.style.left = nextX + `px`;
 
       window.form.address(nextX, nextY);
     };
@@ -67,12 +67,12 @@
     const onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener(`mousemove`, onMouseMove);
+      document.removeEventListener(`mouseup`, onMouseUp);
     };
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener(`mousemove`, onMouseMove);
+    document.addEventListener(`mouseup`, onMouseUp);
 
   });
 
@@ -86,13 +86,13 @@
   };
 
   const mainPinStart = function () {
-    let pinX = '570px';
-    let pinY = '375px';
+    let pinX = `570px`;
+    let pinY = `375px`;
 
     mainPins.style.left = pinX;
     mainPins.style.top = pinY;
 
-    addressElement.value = ' X 570 , Y 375';
+    addressElement.value = ` 613, 428`;
   };
 
   const disabledFilters = function () {
@@ -100,12 +100,12 @@
   };
 
   const activate = function () {
-    mapElement.classList.remove('map--faded');
+    mapElement.classList.remove(`map--faded`);
   };
 
   const deactivate = function () {
     mainPinStart();
-    mapElement.classList.add('map--faded');
+    mapElement.classList.add(`map--faded`);
   };
 
   let dataAds = [];
@@ -119,6 +119,8 @@
     const filteredData = window.filter.apply(dataAds);
     window.pin.render(filteredData.slice(0, 5));
   };
+
+  mainPinStart();
 
   window.map = {
     activate: activate,
