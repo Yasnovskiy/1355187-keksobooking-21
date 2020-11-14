@@ -119,7 +119,7 @@
   };
 
   const addressRecord = function (x, y) {
-    addressElement.value = `` + Math.round(x) + ` , ` + Math.round(y);
+    addressElement.value = `` + Math.round(x) + `, ` + Math.round(y);
 
     return addressElement;
   };
@@ -129,9 +129,9 @@
     window.upload(new FormData(formElement), onSuccess, onError);
   });
 
-  const onSuccess = function (res) {
-    window.message.showSuccess(res);
+  const onSuccess = function () {
     window.main.deactivate();
+    window.message.showSuccess();
   };
 
   const onError = function (res) {
@@ -165,3 +165,5 @@
     formOn: onForm
   };
 })();
+
+

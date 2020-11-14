@@ -46,8 +46,9 @@
 
   const onDocumentKeydown = function (evt) {
     if (evt.key === `Escape`) {
-      closeError();
+      evt.preventDefault();
       closeSuccess();
+      closeError();
     }
   };
 
