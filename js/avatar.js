@@ -30,6 +30,6 @@
   };
 
   window.avatar = {
-    resetBeginning: resetBeginning
+    reset: resetBeginning
   };
 })();

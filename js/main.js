@@ -6,7 +6,7 @@
       isActive = true;
       window.form.activate();
       window.map.activate();
-      const dataPin = window.map.getdatapin();
+      const dataPin = window.map.getMainPinPosition();
       window.form.address(dataPin.x, dataPin.y);
       window.form.formOn();
 
@@ -15,6 +15,7 @@
   };
 
   const deactivatePage = function () {
+    isActive = false;
     window.form.deactivate();
     window.filter.clearFilter();
     window.map.deactivate();
@@ -22,7 +23,6 @@
     window.card.closeCard();
     window.form.formOff();
     window.filter.offFilter();
-    isActive = false;
   };
 
   const onSuccess = function (data) {
@@ -35,12 +35,11 @@
     window.message.showError(data);
   };
 
-
   window.form.formOff();
   window.filter.offFilter();
 
   window.main = {
-    activatePage: activatePage,
-    deactivatePage: deactivatePage,
+    activate: activatePage,
+    deactivate: deactivatePage,
   };
 })();

@@ -105,25 +105,24 @@
     }
   });
 
-  const activate = function () {
+  const activateForm = function () {
     formElement.classList.remove(`ad-form--disabled`);
     disabledCapacity();
   };
 
-  const deactivate = function () {
+  const deactivateForm = function () {
     formElement.classList.add(`ad-form--disabled`);
     formElement.reset();
-    window.photo.removePhoto();
-    window.avatar.resetBeginning();
+    window.photo.remove();
+    window.avatar.reset();
     pressPrice();
   };
 
-  const addressRecord = function (X, Y) {
-    addressElement.value = `` + Math.round(X + 42.5) + ` , ` + Math.round(Y + 52.5);
+  const addressRecord = function (x, y) {
+    addressElement.value = `` + Math.round(x) + ` , ` + Math.round(y);
 
     return addressElement;
   };
-
 
   formElement.addEventListener(`submit`, function (evt) {
     evt.preventDefault();
@@ -132,7 +131,7 @@
 
   const onSuccess = function (res) {
     window.message.showSuccess(res);
-    window.main.deactivatePage();
+    window.main.deactivate();
   };
 
   const onError = function (res) {
@@ -141,16 +140,16 @@
 
   onClear.addEventListener(`click`, function (evt) {
     evt.preventDefault();
-    window.main.deactivatePage();
+    window.main.deactivate();
   });
 
-  const formOff = function () {
+  const offForm = function () {
     for (let i = 0; i < field.length; i++) {
       field[i].setAttribute(`disabled`, `disabled`);
     }
   };
 
-  const formOn = function () {
+  const onForm = function () {
     for (let i = 0; i < field.length; i++) {
       field[i].removeAttribute(`disabled`);
     }
@@ -159,11 +158,10 @@
 
   window.form = {
     disabled: disabledCapacity,
-    activate: activate,
-    deactivate: deactivate,
+    activate: activateForm,
+    deactivate: deactivateForm,
     address: addressRecord,
-    pressPrice: pressPrice,
-    formOff: formOff,
-    formOn: formOn
+    formOff: offForm,
+    formOn: onForm
   };
 })();

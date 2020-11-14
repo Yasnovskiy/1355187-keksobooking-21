@@ -49,14 +49,9 @@
     });
   };
 
-  // const removeClassActive = function () {
-  //   .classList.remove('map__pin--active');
-  // };
-
   window.pin = {
     render: renderPins,
     removePins: removePins,
     removeActive: removeActive
-    // removeClassActive: removeClassActive
   };
 })();

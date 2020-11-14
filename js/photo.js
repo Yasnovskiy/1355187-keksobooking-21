@@ -17,7 +17,7 @@
       const reader = new FileReader();
 
       reader.addEventListener(`load`, function () {
-        let preview = document.createElement(`img`);
+        const preview = document.createElement(`img`);
         preview.src = reader.result;
         preview.style = `width:100%; height:100%`;
         photoDiv.appendChild(preview);
@@ -28,10 +28,13 @@
   });
 
   const removePhoto = function () {
-    photoDiv.remove(`img`);
+    const img = photoDiv.querySelector(`img`);
+    if (img) {
+      img.remove();
+    }
   };
 
   window.photo = {
-    removePhoto: removePhoto
+    remove: removePhoto
   };
 })();

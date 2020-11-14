@@ -14,20 +14,20 @@
   };
 
   const setMainPinPosition = function (x, y) {
-    mainPin.style.top = (y - (mainPin.offsetWidth / 2)) + `px`;
-    mainPin.style.left = (x - mainPin.offsetHeight) + `px`;
+    mainPin.style.top = (y - mainPin.offsetHeight) + `px`;
+    mainPin.style.left = (x - mainPin.offsetWidth / 2) + `px`;
   };
 
   mainPin.addEventListener(`mousedown`, function (evt) {
     if (evt.button === 0) {
       evt.preventDefault();
-      window.main.activatePage();
+      window.main.activate();
     }
   });
 
   mainPin.addEventListener(`click`, function (evt) {
     evt.preventDefault();
-    window.main.activatePage();
+    window.main.activate();
   });
 
   mainPin.addEventListener(`mousedown`, function (evt) {
@@ -53,8 +53,8 @@
 
       const pinPosition = getMainPinPosition();
 
-      let nextY = pinPosition.x - shift.y;
-      let nextX = pinPosition.y - shift.x;
+      let nextY = pinPosition.y - shift.y;
+      let nextX = pinPosition.x - shift.x;
 
       if (nextX < 0) {
         nextX = 0;
@@ -71,9 +71,6 @@
       if (nextY > 630) {
         nextY = 630;
       }
-
-      // mainPins.style.top = nextY + `px`;
-      // mainPins.style.left = nextX + `px`;
 
       setMainPinPosition(nextX, nextY);
 
@@ -92,15 +89,6 @@
 
   });
 
-  const getDataPin = function () {
-    let dataPit = {
-      x: mainPin.offsetLeft,
-      y: mainPin.offsetTop
-    };
-
-    return dataPit;
-  };
-
   const mainPinStart = function () {
     let pinX = `570px`;
     let pinY = `375px`;
@@ -108,18 +96,18 @@
     mainPin.style.left = pinX;
     mainPin.style.top = pinY;
 
-    addressElement.value = ` 0, 0`;
+    addressElement.value = `603, 440`;
   };
 
   const disabledFilters = function () {
     formElement.reset();
   };
 
-  const activate = function () {
+  const activateMap = function () {
     mapElement.classList.remove(`map--faded`);
   };
 
-  const deactivate = function () {
+  const deactivateMap = function () {
     mainPinStart();
     mapElement.classList.add(`map--faded`);
   };
@@ -139,9 +127,9 @@
   mainPinStart();
 
   window.map = {
-    activate: activate,
-    deactivate: deactivate,
-    getdatapin: getDataPin,
+    activate: activateMap,
+    deactivate: deactivateMap,
+    getMainPinPosition: getMainPinPosition,
     disabledFilters: disabledFilters,
     setData: setData,
     rerenderPins: rerenderPins
