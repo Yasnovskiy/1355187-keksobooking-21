@@ -7,7 +7,7 @@
       window.form.activate();
       window.map.activate();
       const dataPin = window.map.getMainPinPosition();
-      window.form.address(dataPin.x, dataPin.y);
+      window.form.setAddress(dataPin.x, dataPin.y);
       window.form.formOn();
 
       window.load(onSuccess, onError);
@@ -23,6 +23,12 @@
     window.card.closeCard();
     window.form.formOff();
     window.filter.offFilter();
+    const mainPinPosition = window.map.getMainPinPosition();
+    window.form.setAddress(mainPinPosition.x, mainPinPosition.y);
+  };
+
+  const getActiveStatus = function () {
+    return isActive;
   };
 
   const onSuccess = function (data) {
@@ -35,11 +41,11 @@
     window.message.showError(data);
   };
 
-  window.form.formOff();
-  window.filter.offFilter();
-
   window.main = {
     activate: activatePage,
     deactivate: deactivatePage,
+    getActiveStatus: getActiveStatus
   };
+
+  deactivatePage();
 })();

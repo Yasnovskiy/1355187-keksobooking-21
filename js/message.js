@@ -26,6 +26,7 @@
     document.addEventListener(`keydown`, onDocumentKeydown);
 
     main.appendChild(success);
+    success.focus();
   };
 
   const closeError = function () {

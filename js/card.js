@@ -19,11 +19,15 @@
     card.querySelector(`.popup__avatar`).src = obj.author.avatar;
 
     const featuresList = card.querySelector(`.popup__features`);
-    featuresList.innerHTML = ``;
-    for (let i = 0; i < obj.offer.features.length; i++) {
-      const features = obj.offer.features[i];
-      const featureElement = `<li class="popup__feature popup__feature--` + features + `"></li>`;
-      featuresList.insertAdjacentHTML(`afterbegin`, featureElement);
+    if (obj.offer.features === true) {
+      featuresList.innerHTML = ``;
+      for (let i = 0; i < obj.offer.features.length; i++) {
+        const features = obj.offer.features[i];
+        const featureElement = `<li class="popup__feature popup__feature--` + features + `"></li>`;
+        featuresList.insertAdjacentHTML(`afterbegin`, featureElement);
+      }
+    } else {
+      featuresList.style = `display:none;`;
     }
 
     const photosList = card.querySelector(`.popup__photos`);

@@ -1,14 +1,16 @@
 'use strict';
 
 (function () {
+  const HEIGHT = 70;
+  const WIDTH = 50;
   const templatePin = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   const similarListMapPins = document.querySelector(`.map__pins`);
   const fragment = document.createDocumentFragment();
 
   const createTemplatePin = function (obj) {
     const pin = templatePin.cloneNode(true);
-    pin.style.left = obj.location.x + `px`;
-    pin.style.top = obj.location.y + `px`;
+    pin.style.left = (obj.location.x - WIDTH / 2) + `px`;
+    pin.style.top = (obj.location.y - HEIGHT) + `px`;
     pin.querySelector(`img`).src = obj.author.avatar;
 
     pin.addEventListener(`click`, function () {

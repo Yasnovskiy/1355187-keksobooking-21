@@ -1,16 +1,23 @@
 'use strict';
 
 (function () {
+  const HEIGHTPIN = 18;
   const mapElement = document.querySelector(`.map`);
   const formElement = document.querySelector(`.map__filters`);
   const mainPin = document.querySelector(`.map__pin--main`);
-  const addressElement = document.querySelector(`[name="address"]`);
 
   const getMainPinPosition = function () {
-    return {
-      x: mainPin.offsetLeft + mainPin.offsetWidth / 2,
-      y: mainPin.offsetTop + mainPin.offsetHeight
-    };
+    if (window.main.getActiveStatus()) {
+      return {
+        x: mainPin.offsetLeft + mainPin.offsetWidth / 2,
+        y: mainPin.offsetTop + mainPin.offsetHeight + HEIGHTPIN
+      };
+    } else {
+      return {
+        x: mainPin.offsetLeft + mainPin.offsetWidth / 2,
+        y: mainPin.offsetTop + mainPin.offsetHeight / 2
+      };
+    }
   };
 
   const setMainPinPosition = function (x, y) {
@@ -74,7 +81,7 @@
 
       setMainPinPosition(nextX, nextY);
 
-      window.form.address(nextX, nextY);
+      window.form.setAddress(nextX, nextY);
     };
 
     const onMouseUp = function (upEvt) {
@@ -95,8 +102,6 @@
 
     mainPin.style.left = pinX;
     mainPin.style.top = pinY;
-
-    addressElement.value = `603, 440`;
   };
 
   const disabledFilters = function () {
@@ -121,10 +126,8 @@
     window.card.closeCard();
     window.pin.removePins();
     const filteredData = window.filter.apply(dataAds);
-    window.pin.render(filteredData.slice(0, 5));
+    window.pin.render(filteredData);
   };
-
-  mainPinStart();
 
   window.map = {
     activate: activateMap,

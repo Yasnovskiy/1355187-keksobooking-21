@@ -160,7 +160,7 @@
     disabled: disabledCapacity,
     activate: activateForm,
     deactivate: deactivateForm,
-    address: addressRecord,
+    setAddress: addressRecord,
     formOff: offForm,
     formOn: onForm
   };

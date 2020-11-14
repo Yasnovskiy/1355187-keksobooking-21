@@ -73,13 +73,31 @@
     const checked = formFilters.querySelectorAll(`.map__checkbox:checked`);
     const checkedArr = Array.from(checked);
 
-    const filtered = data.filter(function (item) {
-      return checkType(item) &&
-        checkByFeatures(item, checkedArr) &&
-        checkRooms(item) &&
-        checkGuests(item) &&
-        checkPrice(item);
-    });
+    const filtered = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
+      if (checkType(item) &&
+      checkByFeatures(item, checkedArr) &&
+      checkRooms(item) &&
+      checkGuests(item) &&
+      checkPrice(item)) {
+        filtered.push(item);
+      }
+
+      if (filtered.length >= 5) {
+        break;
+      }
+    }
+
+
+    // // const filtered = data.filter(function (item) {
+    // //   return checkType(item) &&
+    // //     checkByFeatures(item, checkedArr) &&
+    // //     checkRooms(item) &&
+    // //     checkGuests(item) &&
+    // //     checkPrice(item);
+    // // });
 
     return filtered;
   };
