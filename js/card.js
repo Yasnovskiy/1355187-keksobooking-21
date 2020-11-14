@@ -45,7 +45,6 @@
     if (evt.key === `Escape`) {
       evt.preventDefault();
       closeCard();
-      window.pin.removeClassActive(evt);
     }
   };
 
