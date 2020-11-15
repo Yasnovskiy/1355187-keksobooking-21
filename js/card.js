@@ -25,25 +25,28 @@
     setTextContentWithHide(card.querySelector(`.popup__description`), obj.offer.description);
     card.querySelector(`.popup__avatar`).src = obj.author.avatar;
 
-
     const featuresList = card.querySelector(`.popup__features`);
-    if (obj.offer.features === true) {
+    if (!obj.offer.features.length) {
+      featuresList.style = `display:none;`;
+    } else {
       featuresList.innerHTML = ``;
       for (let i = 0; i < obj.offer.features.length; i++) {
         const features = obj.offer.features[i];
         const featureElement = `<li class="popup__feature popup__feature--` + features + `"></li>`;
         featuresList.insertAdjacentHTML(`afterbegin`, featureElement);
       }
-    } else {
-      featuresList.style = `display:none;`;
     }
 
     const photosList = card.querySelector(`.popup__photos`);
-    photosList.innerHTML = ``;
-    for (let j = 0; j < obj.offer.photos.length; j++) {
-      const photo = templatePhoto.cloneNode(true);
-      photo.src = obj.offer.photos[j];
-      photosList.appendChild(photo);
+    if (!obj.offer.photos.length) {
+      photosList.style = `display:none;`;
+    } else {
+      photosList.innerHTML = ``;
+      for (let j = 0; j < obj.offer.photos.length; j++) {
+        const photo = templatePhoto.cloneNode(true);
+        photo.src = obj.offer.photos[j];
+        photosList.appendChild(photo);
+      }
     }
 
     card.querySelector(`.popup__close`).addEventListener(`click`, function () {
@@ -52,13 +55,6 @@
 
     return card;
   };
-
-   // featuresList.innerHTML = ``;
-    // for (let i = 0; i < obj.offer.features.length; i++) {
-    //   const features = obj.offer.features[i];
-    //   const featureElement = `<li class="popup__feature popup__feature--` + features + `"></li>`;
-    //   featuresList.insertAdjacentHTML(`afterbegin`, featureElement);
-    // }
 
   const onDocumentKeydown = function (evt) {
     if (evt.key === `Escape`) {
@@ -75,19 +71,6 @@
       document.removeEventListener(`keydown`, onDocumentKeydown);
     }
   };
-
-
-  // const checkCard = function (obj) {
-  //   const card = createTemplateCards(obj);
-  //   const item = card.childNodes;
-  //   const hi = Array.from(item);
-
-  //   hi.forEach((el) => {
-  //     if (el === null) {
-  //       el.style = `display:none;`;
-  //     }
-  //   });
-  // };
 
   const translaiteType = function (type) {
     if (type === `palace`) {
