@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  const HEIGHTPIN = 18;
+  const HEIGHT_PIN = 18;
   const mapElement = document.querySelector(`.map`);
   const formElement = document.querySelector(`.map__filters`);
   const mainPin = document.querySelector(`.map__pin--main`);
@@ -10,7 +10,7 @@
     if (window.main.getActiveStatus()) {
       return {
         x: mainPin.offsetLeft + mainPin.offsetWidth / 2,
-        y: mainPin.offsetTop + mainPin.offsetHeight + HEIGHTPIN
+        y: mainPin.offsetTop + mainPin.offsetHeight + HEIGHT_PIN
       };
     } else {
       return {
@@ -21,7 +21,7 @@
   };
 
   const setMainPinPosition = function (x, y) {
-    mainPin.style.top = (y - mainPin.offsetHeight) + `px`;
+    mainPin.style.top = (y - mainPin.offsetHeight - HEIGHT_PIN) + `px`;
     mainPin.style.left = (x - mainPin.offsetWidth / 2) + `px`;
   };
 
@@ -58,7 +58,7 @@
         y: moveEvt.clientY
       };
 
-      const pinPosition = getMainPinPosition();
+      let pinPosition = getMainPinPosition();
 
       let nextY = pinPosition.y - shift.y;
       let nextX = pinPosition.x - shift.x;
