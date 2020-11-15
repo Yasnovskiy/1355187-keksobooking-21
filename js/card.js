@@ -6,17 +6,25 @@
   const filtersElement = document.querySelector(`.map__filters-container`);
   const mapElement = document.querySelector(`.map`);
 
+  const setTextContentWithHide = function (element, value) {
+    element.textContent = value;
+    if (!value) {
+      element.hidden = true;
+    }
+  };
+
   const createTemplateCards = function (obj) {
     const card = templateCards.cloneNode(true);
 
-    card.querySelector(`.popup__title`).textContent = obj.offer.title;
-    card.querySelector(`.popup__text--address`).textContent = obj.offer.address;
-    card.querySelector(`.popup__text--price`).textContent = obj.offer.price + ` ₽`;
-    card.querySelector(`.popup__type`).textContent = translaiteType(obj.offer.type);
-    card.querySelector(`.popup__text--capacity`).textContent = obj.offer.rooms + ` комнаты для ` + obj.offer.guests + ` гостей`;
-    card.querySelector(`.popup__text--time`).textContent = `Заезд после ` + obj.offer.checkin + `, выезд до ` + obj.offer.checkout;
-    card.querySelector(`.popup__description`).textContent = obj.offer.description;
+    setTextContentWithHide(card.querySelector(`.popup__title`), obj.offer.title);
+    setTextContentWithHide(card.querySelector(`.popup__text--address`), obj.offer.address);
+    setTextContentWithHide(card.querySelector(`.popup__text--price`), obj.offer.price + ` ₽`);
+    setTextContentWithHide(card.querySelector(`.popup__type`), translaiteType(obj.offer.type));
+    setTextContentWithHide(card.querySelector(`.popup__text--capacity`), obj.offer.rooms + ` комнаты для ` + obj.offer.guests + ` гостей`);
+    setTextContentWithHide(card.querySelector(`.popup__text--time`), `Заезд после ` + obj.offer.checkin + `, выезд до ` + obj.offer.checkout);
+    setTextContentWithHide(card.querySelector(`.popup__description`), obj.offer.description);
     card.querySelector(`.popup__avatar`).src = obj.author.avatar;
+
 
     const featuresList = card.querySelector(`.popup__features`);
     if (obj.offer.features === true) {
@@ -45,6 +53,13 @@
     return card;
   };
 
+   // featuresList.innerHTML = ``;
+    // for (let i = 0; i < obj.offer.features.length; i++) {
+    //   const features = obj.offer.features[i];
+    //   const featureElement = `<li class="popup__feature popup__feature--` + features + `"></li>`;
+    //   featuresList.insertAdjacentHTML(`afterbegin`, featureElement);
+    // }
+
   const onDocumentKeydown = function (evt) {
     if (evt.key === `Escape`) {
       evt.preventDefault();
@@ -60,6 +75,19 @@
       document.removeEventListener(`keydown`, onDocumentKeydown);
     }
   };
+
+
+  // const checkCard = function (obj) {
+  //   const card = createTemplateCards(obj);
+  //   const item = card.childNodes;
+  //   const hi = Array.from(item);
+
+  //   hi.forEach((el) => {
+  //     if (el === null) {
+  //       el.style = `display:none;`;
+  //     }
+  //   });
+  // };
 
   const translaiteType = function (type) {
     if (type === `palace`) {

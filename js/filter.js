@@ -90,15 +90,6 @@
       }
     }
 
-
-    // // const filtered = data.filter(function (item) {
-    // //   return checkType(item) &&
-    // //     checkByFeatures(item, checkedArr) &&
-    // //     checkRooms(item) &&
-    // //     checkGuests(item) &&
-    // //     checkPrice(item);
-    // // });
-
     return filtered;
   };
 
