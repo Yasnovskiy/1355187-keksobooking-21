@@ -56,7 +56,7 @@
         photosList.appendChild(photo);
       }
     } else {
-      photosList.hidden = true;
+      photosList.style = `display:none;`;
     }
 
 
